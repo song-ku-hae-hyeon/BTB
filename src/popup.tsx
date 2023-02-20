@@ -6,7 +6,7 @@ import App from "./App";
 const $popup = document.getElementById("popup");
 ReactDOM.render(
   <>
-    <App/>
+    <App />
   </>,
   $popup,
 );

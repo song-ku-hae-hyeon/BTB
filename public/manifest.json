@@ -6,21 +6,15 @@
   "action": {
     "default_popup": "popup.html"
   },
-  "icons": {
-    
-  },
+  "icons": {},
   "background": {
     "service_worker": "background.js"
   },
-  "host_permissions": [
-    "<all_urls>"
-  ],
+  "host_permissions": ["<all_urls>"],
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*", "<all_urls>"],
-      "js": [
-        "content.js"
-      ]
+      "js": ["content.js"]
     }
   ]
 }
