@@ -1,20 +1,20 @@
 {
   "name": "btb2",
   "description": "",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "version": "1.0.0",
+  "action": {
+    "default_popup": "popup.html"
+  },
   "icons": {
     
   },
-  "browser_action": {
-      "default_popup": "popup.html"
-  },
   "background": {
-    "scripts": [
-      "background.js"
-    ],
-    "persistent": false
+    "service_worker": "background.js"
   },
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*", "<all_urls>"],
