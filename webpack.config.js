@@ -1,38 +1,38 @@
-const webpack = require("webpack");
-const path = require("path");
-const CopyPlugin = require("copy-webpack-plugin");
+const webpack = require('webpack')
+const path = require('path')
+const CopyPlugin = require('copy-webpack-plugin')
 
 const config = {
   mode: 'development',
   entry: {
-    popup: path.join(__dirname, "src/popup.tsx"),
-    content: path.join(__dirname, "src/content.tsx"),
-    background: path.join(__dirname, "src/background.ts"),
+    popup: path.join(__dirname, 'src/popup.tsx'),
+    content: path.join(__dirname, 'src/content.tsx'),
+    background: path.join(__dirname, 'src/background.ts'),
   },
-  output: { clean: true, path: path.join(__dirname, "dist"), filename: "[name].js" },
+  output: { clean: true, path: path.join(__dirname, 'dist'), filename: '[name].js' },
   module: {
     rules: [
       {
         test: /.(js|jsx)$/,
-        use: "babel-loader",
+        use: 'babel-loader',
         exclude: /node_modules/,
       },
       {
         test: /.ts(x)?$/,
-        loader: "ts-loader",
+        loader: 'ts-loader',
         exclude: /node_modules/,
       },
       {
         test: /.svg$/,
-        use: "file-loader",
+        use: 'file-loader',
       },
       {
         test: /.png$/,
         use: [
           {
-            loader: "url-loader",
+            loader: 'url-loader',
             options: {
-              mimetype: "image/png",
+              mimetype: 'image/png',
             },
           },
         ],
@@ -40,22 +40,20 @@ const config = {
     ],
   },
   resolve: {
-    extensions: [".js", ".jsx", ".tsx", ".ts"],
+    extensions: ['.js', '.jsx', '.tsx', '.ts'],
     alias: {
-      "react-dom": "@hot-loader/react-dom",
+      'react-dom': '@hot-loader/react-dom',
     },
   },
   devServer: {
-    static: "./dist",
+    static: './dist',
   },
   plugins: [
     new CopyPlugin({
-      patterns: [{ from: "public", to: "." }],
+      patterns: [{ from: 'public', to: '.' }],
     }),
   ],
-  devtool: "source-map",
-};
+  devtool: 'source-map',
+}
 
-module.exports = config;
-
-     
+module.exports = config
