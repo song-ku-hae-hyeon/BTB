@@ -43,6 +43,7 @@
     "start": "webpack serve",
     "build": "webpack",
     "prepare": "husky install",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "test": ""
   }
 }
