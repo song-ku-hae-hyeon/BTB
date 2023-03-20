@@ -1,6 +1,6 @@
-const webpack = require('webpack')
-const path = require('path')
-const CopyPlugin = require('copy-webpack-plugin')
+const webpack = require('webpack');
+const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const config = {
   mode: 'development',
@@ -43,6 +43,7 @@ const config = {
     extensions: ['.js', '.jsx', '.tsx', '.ts'],
     alias: {
       'react-dom': '@hot-loader/react-dom',
+      '@components': path.resolve(__dirname, 'src/components'),
     },
   },
   devServer: {
@@ -54,6 +55,6 @@ const config = {
     }),
   ],
   devtool: 'source-map',
-}
+};
 
-module.exports = config
+module.exports = config;
