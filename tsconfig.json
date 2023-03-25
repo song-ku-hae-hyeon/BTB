@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "outDir": "./dist/",
     "sourceMap": true,
     "jsx": "react",
@@ -9,7 +10,11 @@
     "module": "es6",
     "moduleResolution": "node",
     "target": "es5",
-    "allowJs": true
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@components": ["src/components/index"]
+    }
   },
   "include": ["./src/**/*", "src/type.d.ts"]
 }
