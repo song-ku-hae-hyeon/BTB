@@ -30,6 +30,8 @@ const PopupApp = () => {
       <PopupButton color="red" onClick={() => handleButtonClick(false)}>
         CLOSE
       </PopupButton>
+      <button id="on">on</button>
+      <button id="off">off</button>
     </PopupWrapper>
   );
 };

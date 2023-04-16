@@ -16,5 +16,11 @@
       "matches": ["http://*/*", "https://*/*", "<all_urls>"],
       "js": ["content.js"]
     }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["stamp.png", "stamp_mark.webp", "stamp_mark.png"],
+      "matches": ["<all_urls>"]
+    }
   ]
 }
