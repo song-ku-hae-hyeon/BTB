@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { DockBar } from '@components';
-import { RecoilRoot, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { contentState } from './atoms/content';
 
 interface ContentWrapperProps {
@@ -38,11 +38,9 @@ const ContentApp = ({ isDev }: ContentAppProps) => {
   }, []);
 
   return (
-    <RecoilRoot>
-      <ContentWrapper isActive={isContentActive}>
-        <DockBar />
-      </ContentWrapper>
-    </RecoilRoot>
+    <ContentWrapper isActive={isContentActive}>
+      <DockBar />
+    </ContentWrapper>
   );
 };
 

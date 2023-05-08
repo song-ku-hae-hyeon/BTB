@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { RecoilRoot, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import { PopupButton } from '@components';
 import { popupState } from './atoms/popup';
@@ -25,7 +25,6 @@ const PopupApp = () => {
     });
   };
   return (
-    <RecoilRoot>
       <PopupWrapper>
         <PopupButton color="green" onClick={() => handleButtonClick(true)}>
           OPEN
@@ -34,7 +33,6 @@ const PopupApp = () => {
           CLOSE
         </PopupButton>
       </PopupWrapper>
-    </RecoilRoot>
   );
 };
 
