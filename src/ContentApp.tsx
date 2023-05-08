@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { DockBar } from '@components';
+import { RecoilRoot, useRecoilState } from 'recoil';
+import { contentState } from './atoms/content';
 
 interface ContentWrapperProps {
   isActive: boolean;
@@ -22,6 +24,7 @@ interface ContentAppProps {
 
 const ContentApp = ({ isDev }: ContentAppProps) => {
   const [isContentActive, setIsContentActive] = useState(Boolean(isDev));
+  {/* const [isContentActive, setIsContentActive] = useRecoilState(contentState); */}
 
   useEffect(() => {
     if (isDev) return;
@@ -35,9 +38,11 @@ const ContentApp = ({ isDev }: ContentAppProps) => {
   }, []);
 
   return (
-    <ContentWrapper isActive={isContentActive}>
-      <DockBar />
-    </ContentWrapper>
+    <RecoilRoot>
+      <ContentWrapper isActive={isContentActive}>
+        <DockBar />
+      </ContentWrapper>
+    </RecoilRoot>
   );
 };
 

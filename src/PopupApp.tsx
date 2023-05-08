@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { RecoilRoot, useRecoilState } from 'recoil';
 
 import { PopupButton } from '@components';
+import { popupState } from './atoms/popup';
 
 const PopupWrapper = styled.div`
   display: flex;
@@ -14,7 +16,7 @@ const PopupWrapper = styled.div`
 `;
 
 const PopupApp = () => {
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useRecoilState(popupState);
 
   const handleButtonClick = (newState: boolean) => {
     setIsActive(newState);
@@ -23,14 +25,16 @@ const PopupApp = () => {
     });
   };
   return (
-    <PopupWrapper>
-      <PopupButton color="green" onClick={() => handleButtonClick(true)}>
-        OPEN
-      </PopupButton>
-      <PopupButton color="red" onClick={() => handleButtonClick(false)}>
-        CLOSE
-      </PopupButton>
-    </PopupWrapper>
+    <RecoilRoot>
+      <PopupWrapper>
+        <PopupButton color="green" onClick={() => handleButtonClick(true)}>
+          OPEN
+        </PopupButton>
+        <PopupButton color="red" onClick={() => handleButtonClick(false)}>
+          CLOSE
+        </PopupButton>
+      </PopupWrapper>
+    </RecoilRoot>
   );
 };
 
