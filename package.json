@@ -37,6 +37,9 @@
     "webpack-dev-server": "^4.7.2"
   },
   "dependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.3",
+    "html-webpack-plugin": "^5.5.1",
     "konva": "^8.4.2",
     "react": "^18.2.0",
     "react-dom": "^16.14.0",
@@ -44,8 +47,9 @@
     "styled-components": "^5.3.8"
   },
   "scripts": {
-    "start": "webpack --watch --progress",
-    "build": "webpack",
+    "dev": "cross-env NODE_ENV=development webpack serve",
+    "start": "cross-env NODE_ENV=production webpack --watch --progress",
+    "build": "cross-env NODE_ENV=production webpack",
     "prepare": "husky install",
     "pre-commit": "lint-staged",
     "test": ""

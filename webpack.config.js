@@ -1,15 +1,24 @@
 const webpack = require('webpack');
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const devEntry = path.resolve(__dirname, './src/index.tsx');
+const prodEntry = {
+  popup: path.join(__dirname, 'src/popup.tsx'),
+  content: path.join(__dirname, 'src/content.tsx'),
+  background: path.join(__dirname, 'src/background.ts'),
+};
+console.log('env :', process.env.NODE_ENV);
 
 const config = {
-  mode: 'production',
-  entry: {
-    popup: path.join(__dirname, 'src/popup.tsx'),
-    content: path.join(__dirname, 'src/content.tsx'),
-    background: path.join(__dirname, 'src/background.ts'),
+  mode: process.env.NODE_ENV ?? 'production',
+  entry: process.env.NODE_ENV === 'development' ? devEntry : prodEntry,
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: '[name].js',
+    clean: true,
   },
-  output: { clean: true, path: path.join(__dirname, 'dist'), filename: '[name].js' },
   module: {
     rules: [
       {
@@ -42,16 +51,21 @@ const config = {
   resolve: {
     extensions: ['.js', '.jsx', '.tsx', '.ts'],
     alias: {
-      'react-dom': '@hot-loader/react-dom',
       '@components': path.resolve(__dirname, 'src/components'),
     },
   },
   devServer: {
     static: './dist',
+    compress: true,
+    port: 3000,
+    open: true,
   },
   plugins: [
     new CopyPlugin({
       patterns: [{ from: 'public', to: '.' }],
+    }),
+    new HtmlWebpackPlugin({
+      filename: './public/index.html',
     }),
   ],
   devtool: 'source-map',
