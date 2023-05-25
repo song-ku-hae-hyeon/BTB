@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 
 import { DockBar } from '@components';
-import { useRecoilState } from 'recoil';
 import { contentState } from './atoms/content';
 
 interface ContentWrapperProps {
@@ -10,6 +10,7 @@ interface ContentWrapperProps {
 }
 
 const ContentWrapper = styled.div<ContentWrapperProps>`
+  // display: ${({ isActive }) => (isActive ? 'flex' : 'none')};
   display: ${({ isActive }) => (isActive ? 'flex' : 'none')};
   position: fixed;
   bottom: 0;

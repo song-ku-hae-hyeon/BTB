@@ -25,14 +25,14 @@ const PopupApp = () => {
     });
   };
   return (
-      <PopupWrapper>
-        <PopupButton color="green" onClick={() => handleButtonClick(true)}>
-          OPEN
-        </PopupButton>
-        <PopupButton color="red" onClick={() => handleButtonClick(false)}>
-          CLOSE
-        </PopupButton>
-      </PopupWrapper>
+    <PopupWrapper>
+      <PopupButton color="green" onClick={() => handleButtonClick(true)}>
+        OPEN
+      </PopupButton>
+      <PopupButton color="red" onClick={() => handleButtonClick(false)}>
+        CLOSE
+      </PopupButton>
+    </PopupWrapper>
   );
 };
 
