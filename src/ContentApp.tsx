@@ -16,14 +16,22 @@ const ContentWrapper = styled.div<ContentWrapperProps>`
   z-index: 9999;
 `;
 
-const ContentApp = () => {
-  const [isContentActive, setIsContentActive] = useState(false);
+interface ContentAppProps {
+  isDev?: boolean;
+}
+
+const ContentApp = ({ isDev }: ContentAppProps) => {
+  const [isContentActive, setIsContentActive] = useState(Boolean(isDev));
 
   useEffect(() => {
-    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-      // console.log(message);
+    if (isDev) return;
+    const messageListener = (message: any) => {
       setIsContentActive(message.state as boolean);
-    });
+    };
+    chrome.runtime.onMessage.addListener(messageListener);
+    return () => {
+      chrome.runtime.onMessage.removeListener(messageListener);
+    };
   }, []);
 
   return (
