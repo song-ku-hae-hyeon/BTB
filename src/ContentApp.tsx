@@ -39,7 +39,7 @@ const ContentApp = ({ isDev }: ContentAppProps) => {
 
   return (
     <ContentWrapper isActive={isContentActive}>
-      <Fireworks />
+      {/* <Fireworks /> */}
       <DockBar />
     </ContentWrapper>
   );
