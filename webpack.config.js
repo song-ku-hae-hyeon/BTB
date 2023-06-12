@@ -9,7 +9,6 @@ const prodEntry = {
   content: path.join(__dirname, 'src/content.tsx'),
   background: path.join(__dirname, 'src/background.ts'),
 };
-console.log('env :', process.env.NODE_ENV);
 
 const config = {
   mode: process.env.NODE_ENV ?? 'production',
@@ -57,7 +56,6 @@ const config = {
   devServer: {
     static: './dist',
     compress: true,
-    port: 3000,
     open: true,
   },
   plugins: [
