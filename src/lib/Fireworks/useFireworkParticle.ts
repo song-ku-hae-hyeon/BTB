@@ -4,6 +4,7 @@ import { Particle } from './particle';
 export const useFireworkParticle = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particleRef = useRef<Particle[]>([]);
+  const rAFIdRef = useRef<number>(0);
 
   const startFireWork = useCallback(() => {
     const context = canvasRef.current?.getContext('2d') as CanvasRenderingContext2D;
@@ -23,18 +24,22 @@ export const useFireworkParticle = () => {
   }, []);
 
   const initFireworkrAF = () => {
-    window.requestAnimationFrame(startFireWork);
+    const rAFId = window.requestAnimationFrame(startFireWork);
+    rAFIdRef.current = rAFId;
+  };
+
+  const cancelFireworkrAF = () => {
+    window.cancelAnimationFrame(rAFIdRef.current);
   };
 
   const createFirework = (x: number, y: number) => {
     const randomNumberGenerator = (min: number, max: number) => Math.random() * (max - min) + min;
     const numberOfParticles = randomNumberGenerator(10, 50);
-    const result = [];
+
     for (let index = 0; index < numberOfParticles; index++) {
       const particle = new Particle(x, y, canvasRef.current as HTMLCanvasElement);
-      result.push(particle);
+      particleRef.current.push(particle);
     }
-    particleRef.current.push(...result);
   };
 
   useEffect(() => {
@@ -42,5 +47,5 @@ export const useFireworkParticle = () => {
     return () => window.cancelAnimationFrame(requestedId);
   }, []);
 
-  return { canvasRef, createFirework };
+  return { canvasRef, createFirework, cancelFireworkrAF };
 };
