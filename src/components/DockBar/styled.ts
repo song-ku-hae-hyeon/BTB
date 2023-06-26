@@ -12,6 +12,7 @@ const DockBarWrapper = styled.div`
   padding: 10px;
   border-radius: 10px;
   background-color: rgba(200, 200, 200, 0.9);
+  user-select: none;
 `;
 
 export default { DockBarWrapper };

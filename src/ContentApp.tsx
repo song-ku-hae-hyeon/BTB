@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { DockBar } from '@components';
 import { Fireworks } from './lib/Fireworks/Fireworks';
+import { ToolType } from '@types';
 
 interface ContentWrapperProps {
   isActive: boolean;
@@ -24,6 +25,7 @@ interface ContentAppProps {
 }
 
 const ContentApp = ({ isDev }: ContentAppProps) => {
+  const [tool, selectTool] = useState<ToolType>('firework');
   const [isContentActive, setIsContentActive] = useState(Boolean(isDev));
 
   useEffect(() => {
@@ -39,8 +41,16 @@ const ContentApp = ({ isDev }: ContentAppProps) => {
 
   return (
     <ContentWrapper isActive={isContentActive}>
-      {/* <Fireworks /> */}
-      <DockBar />
+      {(() => {
+        switch (tool) {
+          case 'firework':
+            return <Fireworks />;
+          case 'pen':
+          default:
+            return <></>;
+        }
+      })()}
+      <DockBar selectTool={selectTool} />
     </ContentWrapper>
   );
 };
