@@ -1,14 +1,18 @@
 import { IconButton } from '@components';
 import S from './styled';
+import { ToolType } from '@types';
 
-const DockBar = () => {
+type DockBarProps = {
+  selectTool: (value: ToolType) => void;
+};
+
+const DockBar = ({ selectTool }: DockBarProps) => {
+  const onClickBtn = (tool: ToolType) => selectTool(tool);
+
   return (
     <S.DockBarWrapper>
-      <IconButton icon="A" />
-      <IconButton icon="B" />
-      <IconButton icon="C" />
-      <IconButton icon="D" />
-      <IconButton icon="E" />
+      <IconButton icon="firework" onClickBtn={() => onClickBtn('firework')} />
+      <IconButton icon="pen" onClickBtn={() => onClickBtn('pen')} />
     </S.DockBarWrapper>
   );
 };

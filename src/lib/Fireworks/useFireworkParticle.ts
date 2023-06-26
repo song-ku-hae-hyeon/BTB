@@ -7,20 +7,22 @@ export const useFireworkParticle = () => {
   const rAFIdRef = useRef<number>(0);
 
   const startFireWork = useCallback(() => {
-    const context = canvasRef.current?.getContext('2d') as CanvasRenderingContext2D;
-    context.fillStyle = 'rgba(0,0,0,0.1)';
-    context.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    const context = canvasRef.current?.getContext('2d');
+    if (context) {
+      context.fillStyle = 'rgba(0,0,0,0.1)';
+      context.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
-    const current = [];
-    for (const particle of particleRef.current) {
-      particle.draw();
-      if (particle.move()) {
-        current.push(particle);
+      const current = [];
+      for (const particle of particleRef.current) {
+        particle.draw();
+        if (particle.move()) {
+          current.push(particle);
+        }
       }
-    }
 
-    particleRef.current = current;
-    initFireworkrAF();
+      particleRef.current = current;
+      initFireworkrAF();
+    }
   }, []);
 
   const initFireworkrAF = () => {
