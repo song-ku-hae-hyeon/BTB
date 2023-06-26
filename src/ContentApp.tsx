@@ -18,6 +18,7 @@ const ContentWrapper = styled.div<ContentWrapperProps>`
   top: 0;
   width: 100vw;
   z-index: 9999;
+  cursor: pointer;
 `;
 
 interface ContentAppProps {
