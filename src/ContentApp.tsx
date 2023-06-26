@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { DockBar } from '@components';
+import { DockBar, HighlightPen } from '@components';
 
 interface ContentWrapperProps {
   isActive: boolean;
@@ -13,7 +13,7 @@ const ContentWrapper = styled.div<ContentWrapperProps>`
   bottom: 0;
   left: 0;
   width: 100vw;
-  z-index: 9999;
+  z-index: 999;
 `;
 
 interface ContentAppProps {
@@ -22,6 +22,11 @@ interface ContentAppProps {
 
 const ContentApp = ({ isDev }: ContentAppProps) => {
   const [isContentActive, setIsContentActive] = useState(Boolean(isDev));
+  const [onHighlightPen, setOnHighlightPen] = useState(false);
+
+  const setObject = {
+    setOnHighlightPen,
+  };
 
   useEffect(() => {
     if (isDev) return;
@@ -36,7 +41,8 @@ const ContentApp = ({ isDev }: ContentAppProps) => {
 
   return (
     <ContentWrapper isActive={isContentActive}>
-      <DockBar />
+      <DockBar setObject={setObject} />
+      {onHighlightPen && <HighlightPen />}
     </ContentWrapper>
   );
 };
