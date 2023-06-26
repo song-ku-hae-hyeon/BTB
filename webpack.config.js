@@ -57,6 +57,7 @@ const config = {
     static: './dist',
     compress: true,
     open: true,
+    port: 3001,
   },
   plugins: [
     new CopyPlugin({
