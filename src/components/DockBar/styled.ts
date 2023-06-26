@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 const DockBarWrapper = styled.div`
+  position: sticky;
+  z-index: 9999;
+  bottom: 0;
   display: flex;
   margin: 32px auto;
   padding: 10px;
