@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { DockBar } from '@components';
+import { Fireworks } from './lib/Fireworks/Fireworks';
 
 interface ContentWrapperProps {
   isActive: boolean;
@@ -12,6 +13,8 @@ const ContentWrapper = styled.div<ContentWrapperProps>`
   position: fixed;
   bottom: 0;
   left: 0;
+  right: 0;
+  top: 0;
   width: 100vw;
   z-index: 9999;
 `;
@@ -36,6 +39,7 @@ const ContentApp = ({ isDev }: ContentAppProps) => {
 
   return (
     <ContentWrapper isActive={isContentActive}>
+      <Fireworks />
       <DockBar />
     </ContentWrapper>
   );

@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "outDir": "./dist/",
     "sourceMap": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "strict": true,
     "noImplicitReturns": true,
     "noImplicitAny": true,

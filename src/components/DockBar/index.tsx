@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import { IconButton } from '@components';
 import S from './styled';
 
