@@ -1,8 +1,13 @@
 import styled from 'styled-components';
+import { useEffect } from 'react';
 import { useFireworkParticle } from './useFireworkParticle';
 
 export const Fireworks = () => {
-  const { canvasRef, createFirework } = useFireworkParticle();
+  const { canvasRef, createFirework, cancelFireworkrAF } = useFireworkParticle();
+
+  useEffect(() => {
+    return () => cancelFireworkrAF();
+  }, []);
 
   return (
     <CanvasStyled
