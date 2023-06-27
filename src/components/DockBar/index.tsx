@@ -1,23 +1,18 @@
-import React, { useState, useEffect } from 'react';
 import { IconButton } from '@components';
 import S from './styled';
+import { ToolType } from '@types';
 
-import type { Dispatch, SetStateAction } from 'react';
+type DockBarProps = {
+  selectTool: (value: ToolType) => void;
+};
 
-interface DockbarProps {
-  setObject: {
-    setOnHighlightPen: Dispatch<SetStateAction<boolean>>;
-  };
-}
+const DockBar = ({ selectTool }: DockBarProps) => {
+  const onClickBtn = (tool: ToolType) => selectTool(tool);
 
-const DockBar = ({ setObject }: DockbarProps) => {
   return (
     <S.DockBarWrapper>
-      <IconButton icon="A" onClick={() => setObject.setOnHighlightPen(prev => !prev)} />
-      <IconButton icon="B" onClick={() => {}} />
-      <IconButton icon="C" onClick={() => {}} />
-      <IconButton icon="D" onClick={() => {}} />
-      <IconButton icon="E" onClick={() => {}} />
+      <IconButton icon="firework" onClickBtn={() => onClickBtn('firework')} />
+      <IconButton icon="pen" onClickBtn={() => onClickBtn('pen')} />
     </S.DockBarWrapper>
   );
 };

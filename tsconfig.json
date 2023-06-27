@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "outDir": "./dist/",
     "sourceMap": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "strict": true,
     "noImplicitReturns": true,
     "noImplicitAny": true,
@@ -13,7 +13,9 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@components": ["src/components/index"]
+      "@components": ["src/components/index"],
+      "@lib": ["src/lib/index"],
+      "@types": ["src/types/index"]
     }
   },
   "include": ["./src/**/*", "src/type.d.ts"]

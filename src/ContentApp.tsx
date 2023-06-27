@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { DockBar, HighlightPen } from '@components';
+import { DockBar } from '@components';
+import { Fireworks } from './lib/Fireworks/Fireworks';
+import { ToolType } from '@types';
 
 interface ContentWrapperProps {
   isActive: boolean;
@@ -12,8 +14,11 @@ const ContentWrapper = styled.div<ContentWrapperProps>`
   position: fixed;
   bottom: 0;
   left: 0;
+  right: 0;
+  top: 0;
   width: 100vw;
-  z-index: 999;
+  z-index: 9999;
+  cursor: pointer;
 `;
 
 interface ContentAppProps {
@@ -21,6 +26,7 @@ interface ContentAppProps {
 }
 
 const ContentApp = ({ isDev }: ContentAppProps) => {
+  const [tool, selectTool] = useState<ToolType>('firework');
   const [isContentActive, setIsContentActive] = useState(Boolean(isDev));
   const [onHighlightPen, setOnHighlightPen] = useState(false);
 
@@ -41,8 +47,16 @@ const ContentApp = ({ isDev }: ContentAppProps) => {
 
   return (
     <ContentWrapper isActive={isContentActive}>
-      <DockBar setObject={setObject} />
-      {onHighlightPen && <HighlightPen />}
+      {(() => {
+        switch (tool) {
+          case 'firework':
+            return <Fireworks />;
+          case 'pen':
+          default:
+            return <></>;
+        }
+      })()}
+      <DockBar selectTool={selectTool} />
     </ContentWrapper>
   );
 };
