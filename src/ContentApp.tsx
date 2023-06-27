@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { DockBar } from '@components';
+import { DockBar, Highlighter } from '@components';
 import { Fireworks } from './lib/Fireworks/Fireworks';
 import { ToolType } from '@types';
 
@@ -12,13 +12,12 @@ interface ContentWrapperProps {
 const ContentWrapper = styled.div<ContentWrapperProps>`
   display: ${({ isActive }) => (isActive ? 'flex' : 'none')};
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
   top: 0;
   width: 100vw;
-  z-index: 9999;
-  cursor: pointer;
+  z-index: 999;
 `;
 
 interface ContentAppProps {
@@ -28,11 +27,6 @@ interface ContentAppProps {
 const ContentApp = ({ isDev }: ContentAppProps) => {
   const [tool, selectTool] = useState<ToolType>('firework');
   const [isContentActive, setIsContentActive] = useState(Boolean(isDev));
-  const [onHighlightPen, setOnHighlightPen] = useState(false);
-
-  const setObject = {
-    setOnHighlightPen,
-  };
 
   useEffect(() => {
     if (isDev) return;
@@ -51,7 +45,8 @@ const ContentApp = ({ isDev }: ContentAppProps) => {
         switch (tool) {
           case 'firework':
             return <Fireworks />;
-          case 'pen':
+          case 'highlighter':
+            return <Highlighter />;
           default:
             return <></>;
         }
