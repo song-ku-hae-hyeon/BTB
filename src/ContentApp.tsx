@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { DockBar, Highlighter, Stamp } from '@components';
 import { Fireworks } from './lib/Fireworks/Fireworks';
 import { ToolType } from '@types';
+import AntGroup from './components/Ant';
 
 interface ContentWrapperProps {
   isActive: boolean;
@@ -49,6 +50,8 @@ const ContentApp = ({ isDev }: ContentAppProps) => {
             return <Highlighter />;
           case 'stamp':
             return <Stamp />;
+          case 'ant':
+            return <AntGroup />;
           default:
             return <></>;
         }

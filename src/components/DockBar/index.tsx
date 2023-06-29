@@ -14,6 +14,7 @@ const DockBar = ({ selectTool }: DockBarProps) => {
       <IconButton icon="firework" onClickBtn={() => onClickBtn('firework')} />
       <IconButton icon="highlighter" onClickBtn={() => onClickBtn('highlighter')} />
       <IconButton icon="stamp" onClickBtn={() => onClickBtn('stamp')} />
+      <IconButton icon="ant" onClickBtn={() => onClickBtn('ant')} />
     </S.DockBarWrapper>
   );
 };
