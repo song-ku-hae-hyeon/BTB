@@ -1,1 +1,1 @@
-export type ToolType = 'firework' | 'highlighter' | 'stamp';
+export type ToolType = 'firework' | 'highlighter' | 'stamp' | 'ant';
