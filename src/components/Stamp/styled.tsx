@@ -23,14 +23,14 @@ const Paper = styled.div`
   z-index: 9100;
 `;
 
-const Stamp = styled.div`
+const Stamp = styled.img`
   display: flex;
-  width: 100%;
-  height: 100%;
+  z-index: 9300;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 9100;
+  width: 70px;
+  height: 70px;
 `;
 
 export default { Playground, Paper, Stamp };
