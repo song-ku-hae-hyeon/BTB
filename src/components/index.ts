@@ -4,3 +4,4 @@ export { default as PopupButton } from './PopupButton';
 export { default as DevBackground } from './DevBackground';
 export { default as Highlighter } from './Highlighter';
 export { default as Stamp } from './Stamp';
+export { default as AntGroup } from './Ant';
