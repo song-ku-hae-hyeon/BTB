@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { DockBar, Highlighter } from '@components';
+import { DockBar, Highlighter, Stamp } from '@components';
 import { Fireworks } from './lib/Fireworks/Fireworks';
 import { ToolType } from '@types';
 
@@ -47,6 +47,8 @@ const ContentApp = ({ isDev }: ContentAppProps) => {
             return <Fireworks />;
           case 'highlighter':
             return <Highlighter />;
+          case 'stamp':
+            return <Stamp />;
           default:
             return <></>;
         }
