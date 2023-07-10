@@ -38,7 +38,7 @@ const AntGroup = () => {
     <Stage width={window.innerWidth} height={window.innerHeight}>
       <Layer>
         {ants.map((ant, idx) => (
-          <Ant {...ant} key={`${ant.x},${ant.y}:${idx}`} />
+          <Ant {...ant} key={idx} />
         ))}
       </Layer>
     </Stage>

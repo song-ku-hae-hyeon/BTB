@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { DockBar, Highlighter, Stamp } from '@components';
+import { DockBar, Highlighter, Stamp, AntGroup } from '@components';
 import { Fireworks } from './lib/Fireworks/Fireworks';
 import { ToolType } from '@types';
-import AntGroup from './components/Ant';
 
 interface ContentWrapperProps {
   isActive: boolean;
