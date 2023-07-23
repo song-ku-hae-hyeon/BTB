@@ -8,6 +8,7 @@ const AntGroup = () => {
 
   useEffect(() => {
     const handleClick = (ev: MouseEvent) => {
+      if (!(ev.target as HTMLElement).closest('.konvajs-content')) return;
       const x = ev.offsetX;
       const y = ev.offsetY;
       setAnts([...ants, { x, y, vx: Math.random() - 0.5, vy: Math.random() - 0.5 }]);
