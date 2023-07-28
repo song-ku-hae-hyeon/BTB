@@ -15,6 +15,8 @@
     "paths": {
       "@components": ["src/components/index"],
       "@lib": ["src/lib/index"],
+      "@static": ["src/static/index"],
+      "@public/*": ["public/*"],
       "@types": ["src/types/index"]
     }
   },
