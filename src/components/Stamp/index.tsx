@@ -3,14 +3,13 @@ import Konva from 'konva';
 import { Stage, Layer, Image as KonvaImage, KonvaNodeComponent } from 'react-konva';
 import S from './styled';
 
-// @ts-ignore
-import StampImg from '../../../public/stamp_mark.png';
+import { IMAGE } from '@static';
 
 import { IRect, Vector2d } from 'konva/lib/types';
 
 const MARK_SIZE = 100;
 const imageObj = new Image();
-imageObj.src = StampImg;
+imageObj.src = IMAGE.STAMP_MARK_URL;
 
 const Paper = () => {
   const [stampPositions, setStampPositions] = useState<(Vector2d & { cropRect: IRect })[]>([]);
@@ -92,7 +91,7 @@ const Paper = () => {
             ))}
           </Layer>
         </Stage>
-        <S.Stamp src="/stamp.png" ref={imgRef} />;
+        <S.Stamp src={IMAGE.STAMP_URL} ref={imgRef} />;
       </S.Paper>
     </div>
   );
