@@ -16,3 +16,15 @@ export const StampAtom = atom<Stamp[]>({
   key: 'stampAtom',
   default: [],
 });
+
+export interface AntData {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+}
+
+export const AntAtom = atom<AntData[]>({
+  key: 'antAtom',
+  default: [],
+});
