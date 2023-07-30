@@ -27,7 +27,7 @@ interface ContentAppProps {
 }
 
 const ContentApp = ({ isDev }: ContentAppProps) => {
-  const [tool, selectTool] = useState<ToolType>('highlighter');
+  const [tool, selectTool] = useState<ToolType>('stamp');
   const [isContentActive, setIsContentActive] = useState(Boolean(isDev));
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const Workbench = ({ tool }: { tool: ToolType }) => {
             case 'highlighter':
               return <Highlighter stageRef={stageRef} />;
             case 'stamp':
-              return <Stamp />;
+              return <Stamp stageRef={stageRef} />;
             case 'ant':
               return <AntGroup />;
             default:
