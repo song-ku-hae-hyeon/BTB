@@ -51,6 +51,7 @@ const config = {
     extensions: ['.js', '.jsx', '.tsx', '.ts'],
     alias: {
       '@components': path.resolve(__dirname, 'src/components'),
+      '@recoil': path.resolve(__dirname, 'src/recoil'),
     },
   },
   devServer: {
