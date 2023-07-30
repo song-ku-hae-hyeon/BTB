@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { RecoilRoot } from 'recoil';
+import { Stage } from 'react-konva';
+import type Konva from 'konva';
 
 import { DockBar, Highlighter, Stamp, AntGroup, Fireworks } from '@components';
 import { ToolType } from '@types';
@@ -25,7 +27,7 @@ interface ContentAppProps {
 }
 
 const ContentApp = ({ isDev }: ContentAppProps) => {
-  const [tool, selectTool] = useState<ToolType>('firework');
+  const [tool, selectTool] = useState<ToolType>('highlighter');
   const [isContentActive, setIsContentActive] = useState(Boolean(isDev));
 
   useEffect(() => {
@@ -42,12 +44,25 @@ const ContentApp = ({ isDev }: ContentAppProps) => {
   return (
     <RecoilRoot>
       <ContentWrapper isActive={isContentActive}>
+        <Workbench tool={tool} />
+        <DockBar selectTool={selectTool} />
+      </ContentWrapper>
+    </RecoilRoot>
+  );
+};
+
+const Workbench = ({ tool }: { tool: ToolType }) => {
+  const stageRef = useRef<Konva.Stage>(null);
+
+  return (
+    <div style={{ position: 'fixed', top: 0, left: 0, zIndex: 9000 }}>
+      <Stage width={window.innerWidth} height={window.innerHeight} ref={stageRef}>
         {(() => {
           switch (tool) {
             case 'firework':
               return <Fireworks />;
             case 'highlighter':
-              return <Highlighter />;
+              return <Highlighter stageRef={stageRef} />;
             case 'stamp':
               return <Stamp />;
             case 'ant':
@@ -56,9 +71,8 @@ const ContentApp = ({ isDev }: ContentAppProps) => {
               return <></>;
           }
         })()}
-        <DockBar selectTool={selectTool} />
-      </ContentWrapper>
-    </RecoilRoot>
+      </Stage>
+    </div>
   );
 };
 
