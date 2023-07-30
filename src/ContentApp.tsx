@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { RecoilRoot } from 'recoil';
 
 import { DockBar, Highlighter, Stamp, AntGroup } from '@components';
 import { Fireworks } from './lib/Fireworks/Fireworks';
@@ -40,23 +41,25 @@ const ContentApp = ({ isDev }: ContentAppProps) => {
   }, []);
 
   return (
-    <ContentWrapper isActive={isContentActive}>
-      {(() => {
-        switch (tool) {
-          case 'firework':
-            return <Fireworks />;
-          case 'highlighter':
-            return <Highlighter />;
-          case 'stamp':
-            return <Stamp />;
-          case 'ant':
-            return <AntGroup />;
-          default:
-            return <></>;
-        }
-      })()}
-      <DockBar selectTool={selectTool} />
-    </ContentWrapper>
+    <RecoilRoot>
+      <ContentWrapper isActive={isContentActive}>
+        {(() => {
+          switch (tool) {
+            case 'firework':
+              return <Fireworks />;
+            case 'highlighter':
+              return <Highlighter />;
+            case 'stamp':
+              return <Stamp />;
+            case 'ant':
+              return <AntGroup />;
+            default:
+              return <></>;
+          }
+        })()}
+        <DockBar selectTool={selectTool} />
+      </ContentWrapper>
+    </RecoilRoot>
   );
 };
 
