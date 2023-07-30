@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useEffect } from 'react';
 import { useFireworkParticle } from './useFireworkParticle';
 
-export const Fireworks = () => {
+const Fireworks = () => {
   const { canvasRef, createFirework, cancelFireworkrAF } = useFireworkParticle();
 
   useEffect(() => {
@@ -26,3 +26,5 @@ const CanvasStyled = styled.canvas`
   right: 0;
   bottom: 0;
 `;
+
+export default Fireworks;

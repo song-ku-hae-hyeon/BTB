@@ -5,3 +5,4 @@ export { default as DevBackground } from './DevBackground';
 export { default as Highlighter } from './Highlighter';
 export { default as Stamp } from './Stamp';
 export { default as AntGroup } from './Ant';
+export { default as Fireworks } from './Fireworks/Fireworks';

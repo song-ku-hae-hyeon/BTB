@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { RecoilRoot } from 'recoil';
 
-import { DockBar, Highlighter, Stamp, AntGroup } from '@components';
-import { Fireworks } from './lib/Fireworks/Fireworks';
+import { DockBar, Highlighter, Stamp, AntGroup, Fireworks } from '@components';
 import { ToolType } from '@types';
 
 interface ContentWrapperProps {
