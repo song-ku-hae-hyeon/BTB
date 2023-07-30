@@ -12,18 +12,24 @@ const AntGroup = () => {
       if (!(ev.target as HTMLElement).closest('.konvajs-content')) return;
       const x = ev.offsetX;
       const y = ev.offsetY;
-      setAnts([...ants, { x, y, vx: Math.random() - 0.5, vy: Math.random() - 0.5, dead: false }]);
+      if (!ev.shiftKey)
+        return setAnts([...ants, { x, y, vx: Math.random() - 0.5, vy: Math.random() - 0.5, dead: false }]);
+      const newAnts = ants.map(ant =>
+        Math.abs(ant.x - x) < 20 && Math.abs(ant.y - y) < 20 ? { ...ant, dead: true } : { ...ant },
+      );
+      setAnts(newAnts);
     };
     document.body.addEventListener('click', handleClick);
 
     const updateAnt = (ant: AntProps) => {
+      if (ant.dead) return { ...ant };
       const x = ant.x + ant.vx;
       const y = ant.y + ant.vy;
       let vx = ant.vx;
       let vy = ant.vy;
       if (x >= window.innerWidth || x < 0) vx *= -1;
       if (y >= window.innerHeight || y < 0) vy *= -1;
-      return { x, y, vx, vy, dead: ant.dead };
+      return { ...ant, x, y, vx, vy };
     };
     const setupFrame = () => {
       setAnts(ants.map(updateAnt));
