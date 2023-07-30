@@ -3,4 +3,5 @@ export interface AntProps {
   y: number;
   vx: number;
   vy: number;
+  dead?: boolean;
 }
