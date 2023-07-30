@@ -6,17 +6,17 @@ import type Konva from 'konva';
 import { useRecoilState } from 'recoil';
 
 type HighlighterProps = {
-  stageRef: RefObject<Konva.Stage>;
+  stageRef: RefObject<Konva.Stage> | null;
 };
 
 const Highlighter = ({ stageRef }: HighlighterProps) => {
   const [lines, setLines] = useRecoilState(HighlighterAtom);
 
   useEffect(() => {
-    const stage = stageRef.current;
+    const stage = stageRef?.current;
     if (!stage) return;
 
-    const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) => {
+    const handleMouseDown = () => {
       const pos = stage.getPointerPosition();
       if (!pos) return;
       setLines(prevLines => [...prevLines, { points: [pos.x, pos.y] }]);
@@ -42,7 +42,7 @@ const Highlighter = ({ stageRef }: HighlighterProps) => {
       stage.off('mousedown touchstart', handleMouseDown);
       stage.off('mousemove touchmove', handleMouseMove);
     };
-  }, [stageRef.current]);
+  }, [stageRef?.current]);
 
   return (
     <Layer>
