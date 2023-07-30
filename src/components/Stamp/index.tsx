@@ -37,7 +37,6 @@ const Paper = () => {
   };
 
   const drawStampMark = (event: React.MouseEvent<HTMLDivElement>) => {
-    console.log('clicked');
     const curPointerPos: Vector2d = { x: event.clientX, y: event.clientY };
     setStampPositions(prevArray => [...prevArray, { ...curPointerPos, cropRect: cropStamp() }]);
   };
@@ -45,9 +44,6 @@ const Paper = () => {
   const stampSeal = (event: React.MouseEvent<HTMLDivElement>) => {
     const mouseX = event.clientX;
     const mouseY = event.clientY;
-
-    console.log(event.screenX);
-    console.log(event.screenY);
 
     imgRef.current.animate(
       [
@@ -77,11 +73,12 @@ const Paper = () => {
 
   return (
     <div>
-      <S.Paper onClick={handleMouseClick}>
+      <S.Paper onMouseDown={handleMouseClick}>
         <Stage width={window.innerWidth} height={window.innerHeight} ref={paperRef} onMouseMove={moveStamp}>
           <Layer>
-            {stampPositions.map(position => (
+            {stampPositions.map((position, index) => (
               <KonvaImage
+                key={`${index}-key`}
                 image={imageObj}
                 x={position.x - MARK_SIZE / 2}
                 y={position.y + 10 - MARK_SIZE / 2}
