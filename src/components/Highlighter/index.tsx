@@ -1,6 +1,6 @@
-import { useRef, useEffect, useState, RefObject } from 'react';
-import { Stage, Layer, Line } from 'react-konva';
-import { HighlighterAtom, HighlighterLineData } from '@recoil';
+import { useEffect, RefObject } from 'react';
+import { Layer, Line } from 'react-konva';
+import { HighlighterAtom } from '@recoil';
 
 import type Konva from 'konva';
 import { useRecoilState } from 'recoil';
