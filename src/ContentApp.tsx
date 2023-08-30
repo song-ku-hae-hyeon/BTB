@@ -4,8 +4,9 @@ import { RecoilRoot } from 'recoil';
 import { Stage } from 'react-konva';
 import type Konva from 'konva';
 
-import { DockBar, Highlighter, Stamp, AntGroup, Fireworks } from '@components';
+import { DockBar, Highlighter, Stamp, AntGroup } from '@components';
 import { ToolType } from '@types';
+import { Bubble } from './components/Bubble';
 
 interface ContentWrapperProps {
   isActive: boolean;
@@ -27,7 +28,7 @@ interface ContentAppProps {
 }
 
 const ContentApp = ({ isDev }: ContentAppProps) => {
-  const [tool, selectTool] = useState<ToolType>('highlighter');
+  const [tool, selectTool] = useState<ToolType>('bubble');
   const [isContentActive, setIsContentActive] = useState(Boolean(isDev));
 
   useEffect(() => {
@@ -60,6 +61,7 @@ const Workbench = ({ tool }: { tool: ToolType }) => {
         <Highlighter stageRef={tool === 'highlighter' ? stageRef : null} />
         <Stamp stageRef={tool === 'stamp' ? stageRef : null} />
         <AntGroup stageRef={tool === 'ant' ? stageRef : null} />
+        <Bubble stageRef={tool === 'bubble' ? stageRef : null} />
       </Stage>
     </div>
   );
