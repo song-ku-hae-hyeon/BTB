@@ -22,6 +22,7 @@ export interface AntData {
   y: number;
   vx: number;
   vy: number;
+  dead?: boolean;
 }
 
 export const AntAtom = atom<AntData[]>({
