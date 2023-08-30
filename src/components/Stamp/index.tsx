@@ -3,15 +3,15 @@ import Konva from 'konva';
 import { Layer, Image as KonvaImage } from 'react-konva';
 import S from './styled';
 
-// @ts-ignore
-import StampImg from '../../../public/stamp_mark.png';
+import { IMAGE } from '@static';
+
 import { IRect, Vector2d } from 'konva/lib/types';
 import { useRecoilState } from 'recoil';
 import { StampAtom } from '@recoil';
 
 const MARK_SIZE = 100;
 const imageObj = new Image();
-imageObj.src = StampImg;
+imageObj.src = IMAGE.STAMP_MARK_URL;
 
 type PaperProps = {
   stageRef: RefObject<Konva.Stage> | null;
@@ -32,20 +32,20 @@ const Paper = ({ stageRef }: PaperProps) => {
       };
 
       const stampSeal = (clientX: number, clientY: number) => {
-        // imgRef.current.animate(
-        //   [
-        //     {
-        //       transform: `translate3d(${clientX - 30}px, ${clientY - 90}px, 0)`,
-        //     },
-        //     {
-        //       transform: `translate3d(${clientX - 30}px, ${clientY - 50}px, 0)`,
-        //     },
-        //     {
-        //       transform: `translate3d(${clientX - 30}px, ${clientY - 90}px, 0)`,
-        //     },
-        //   ],
-        //   { duration: 300, iterations: 1 },
-        // );
+        imgRef.current.animate(
+          [
+            {
+              transform: `translate3d(${clientX - 30}px, ${clientY - 90}px, 0)`,
+            },
+            {
+              transform: `translate3d(${clientX - 30}px, ${clientY - 50}px, 0)`,
+            },
+            {
+              transform: `translate3d(${clientX - 30}px, ${clientY - 90}px, 0)`,
+            },
+          ],
+          { duration: 300, iterations: 1 },
+        );
       };
 
       drawStampMark(clientX, clientY);
@@ -56,8 +56,7 @@ const Paper = ({ stageRef }: PaperProps) => {
       event.evt.preventDefault();
       const mouseY = event.evt.clientY;
       const mouseX = event.evt.clientX;
-      console.log(imgRef.current);
-      // imgRef.current.style.transform = `translate3d(${mouseX - 30}px, ${mouseY - 70}px, 0)`;
+      imgRef.current.style.transform = `translate3d(${mouseX - 30}px, ${mouseY - 70}px, 0)`;
     };
 
     stage.on('mousedown', handleMouseDown);
