@@ -51,6 +51,10 @@ const config = {
     extensions: ['.js', '.jsx', '.tsx', '.ts'],
     alias: {
       '@components': path.resolve(__dirname, 'src/components'),
+      '@static': path.resolve(__dirname, 'src/static'),
+      '@lib': path.resolve(__dirname, 'src/lib'),
+      '@types': path.resolve(__dirname, 'src/types'),
+      '@public': path.resolve(__dirname, 'public'),
     },
   },
   devServer: {

@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState } from 'react';
 import { Stage, Layer, Line } from 'react-konva';
 
+import S from './styled';
+
 import type Konva from 'konva';
 
 interface LineData {
@@ -44,7 +46,7 @@ const Highlighter = () => {
   }, [stageRef.current]);
 
   return (
-    <div style={{ position: 'fixed', top: 0, left: 0, zIndex: 9000 }}>
+    <S.HighlighterWrapper>
       <Stage width={window.innerWidth} height={window.innerHeight} ref={stageRef}>
         <Layer>
           {lines.map((line, i) => (
@@ -60,7 +62,7 @@ const Highlighter = () => {
           ))}
         </Layer>
       </Stage>
-    </div>
+    </S.HighlighterWrapper>
   );
 };
 
