@@ -19,7 +19,7 @@ type PaperProps = {
 
 const Paper = ({ stageRef }: PaperProps) => {
   const [stampPositions, setStampPositions] = useRecoilState(StampAtom);
-  const imgRef = useRef<any>();
+  const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     const stage = stageRef?.current;
@@ -32,20 +32,22 @@ const Paper = ({ stageRef }: PaperProps) => {
       };
 
       const stampSeal = (clientX: number, clientY: number) => {
-        imgRef.current.animate(
-          [
-            {
-              transform: `translate3d(${clientX - 30}px, ${clientY - 90}px, 0)`,
-            },
-            {
-              transform: `translate3d(${clientX - 30}px, ${clientY - 50}px, 0)`,
-            },
-            {
-              transform: `translate3d(${clientX - 30}px, ${clientY - 90}px, 0)`,
-            },
-          ],
-          { duration: 300, iterations: 1 },
-        );
+        if (imgRef.current) {
+          // imgRef.current.animate(
+          //   [
+          //     {
+          //       transform: `translate3d(${clientX - 30}px, ${clientY - 90}px, 0)`,
+          //     },
+          //     {
+          //       transform: `translate3d(${clientX - 30}px, ${clientY - 50}px, 0)`,
+          //     },
+          //     {
+          //       transform: `translate3d(${clientX - 30}px, ${clientY - 90}px, 0)`,
+          //     },
+          //   ],
+          //   { duration: 300, iterations: 1 },
+          // );
+        }
       };
 
       drawStampMark(clientX, clientY);
@@ -56,7 +58,9 @@ const Paper = ({ stageRef }: PaperProps) => {
       event.evt.preventDefault();
       const mouseY = event.evt.clientY;
       const mouseX = event.evt.clientX;
-      imgRef.current.style.transform = `translate3d(${mouseX - 30}px, ${mouseY - 70}px, 0)`;
+      if (imgRef.current) {
+        // imgRef.current.style.transform = `translate3d(${mouseX - 30}px, ${mouseY - 70}px, 0)`;
+      }
     };
 
     stage.on('mousedown', handleMouseDown);

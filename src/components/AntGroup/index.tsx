@@ -17,18 +17,22 @@ const AntGroup = ({ stageRef }: AntGroupProps) => {
   const [ants, setAnts] = useRecoilState(AntAtom);
 
   useEffect(() => {
-    const handleClick = (ev: MouseEvent) => {
-      if (!(ev.target as HTMLElement).closest('.konvajs-content')) return;
-      const x = ev.offsetX;
-      const y = ev.offsetY;
-      if (!ev.shiftKey)
+    const handleClick = ({ evt }: Konva.KonvaEventObject<MouseEvent>) => {
+      if (!(evt.target as HTMLElement).closest('.konvajs-content')) return;
+      const x = evt.offsetX;
+      const y = evt.offsetY;
+      if (!evt.shiftKey)
         return setAnts([...ants, { x, y, vx: Math.random() - 0.5, vy: Math.random() - 0.5, dead: false }]);
       const newAnts = ants.map(ant =>
         Math.abs(ant.x - x) < 20 && Math.abs(ant.y - y) < 20 ? { ...ant, dead: true } : { ...ant },
       );
       setAnts(newAnts);
     };
-    document.body.addEventListener('click', handleClick);
+
+    const stage = stageRef?.current;
+    if (stage) {
+      stage.on('click', handleClick);
+    }
 
     const updateAnt = (ant: AntProps) => {
       if (ant.dead) return { ...ant };
@@ -46,7 +50,7 @@ const AntGroup = ({ stageRef }: AntGroupProps) => {
     const id = requestAnimationFrame(setupFrame);
 
     return () => {
-      document.body.removeEventListener('click', handleClick);
+      stage?.off('click', handleClick);
       cancelAnimationFrame(id);
     };
   }, [ants]);
