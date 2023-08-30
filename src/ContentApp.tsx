@@ -57,7 +57,7 @@ const Workbench = ({ tool }: { tool: ToolType }) => {
   return (
     <div style={{ position: 'fixed', top: 0, left: 0, zIndex: 9000 }}>
       <Stage width={window.innerWidth} height={window.innerHeight} ref={stageRef}>
-        {/* <Highlighter stageRef={tool === 'highlighter' ? stageRef : null} /> */}
+        <Highlighter stageRef={tool === 'highlighter' ? stageRef : null} />
         <Stamp stageRef={tool === 'stamp' ? stageRef : null} />
         <AntGroup stageRef={tool === 'ant' ? stageRef : null} />
       </Stage>

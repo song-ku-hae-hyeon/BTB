@@ -1,10 +1,8 @@
 import { useEffect, RefObject } from 'react';
-import { Layer, Line } from 'react-konva';
+import { Line } from 'react-konva';
 import { HighlighterAtom } from '@recoil';
-import { Stage } from 'react-konva';
 
 import S from './styled';
-
 import type Konva from 'konva';
 import { useRecoilState } from 'recoil';
 
@@ -48,23 +46,19 @@ const Highlighter = ({ stageRef }: HighlighterProps) => {
   }, [stageRef?.current]);
 
   return (
-    <S.HighlighterWrapper>
-      {/* <Stage width={window.innerWidth} height={window.innerHeight} ref={stageRef}> */}
-      <Layer>
-        {lines.map((line, i) => (
-          <Line
-            key={i}
-            points={line.points}
-            stroke="rgba(255, 255, 0, 0.5)" // 형광펜의 색상 설정
-            strokeWidth={20} // 형광펜의 두께 설정
-            globalCompositeOperation="source-over" // 형광펜의 블렌딩 모드 설정
-            lineCap="butt"
-            lineJoin="round"
-          />
-        ))}
-      </Layer>
-      {/* </Stage> */}
-    </S.HighlighterWrapper>
+    <S.HighlighterLayer>
+      {lines.map((line, i) => (
+        <Line
+          key={i}
+          points={line.points}
+          stroke="rgba(255, 255, 0, 0.5)" // 형광펜의 색상 설정
+          strokeWidth={20} // 형광펜의 두께 설정
+          globalCompositeOperation="source-over" // 형광펜의 블렌딩 모드 설정
+          lineCap="butt"
+          lineJoin="round"
+        />
+      ))}
+    </S.HighlighterLayer>
   );
 };
 

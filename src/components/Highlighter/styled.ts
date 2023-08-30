@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { IMAGE } from '@static';
+import { Layer } from 'react-konva';
 
-const HighlighterWrapper = styled.div`
+const HighlighterLayer = styled(Layer)`
   position: fixed;
   top: 0;
   left: 0;
@@ -9,4 +10,4 @@ const HighlighterWrapper = styled.div`
   cursor: url(${IMAGE.HIGHLIGHTER_URL}) 8 64, auto;
 `;
 
-export default { HighlighterWrapper };
+export default { HighlighterLayer };
