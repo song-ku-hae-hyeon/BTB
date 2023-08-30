@@ -14,6 +14,7 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@components": ["src/components/index"],
+      "@recoil": ["src/recoil/index"],
       "@lib": ["src/lib/index"],
       "@static": ["src/static/index"],
       "@public/*": ["public/*"],

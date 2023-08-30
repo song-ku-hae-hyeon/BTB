@@ -1,23 +1,23 @@
-import { useRef, useEffect, useState } from 'react';
-import { Stage, Layer, Line } from 'react-konva';
+import { useEffect, RefObject } from 'react';
+import { Line } from 'react-konva';
+import { HighlighterAtom } from '@recoil';
 
 import S from './styled';
-
 import type Konva from 'konva';
+import { useRecoilState } from 'recoil';
 
-interface LineData {
-  points: number[];
-}
+type HighlighterProps = {
+  stageRef: RefObject<Konva.Stage> | null;
+};
 
-const Highlighter = () => {
-  const stageRef = useRef<Konva.Stage>(null);
-  const [lines, setLines] = useState<LineData[]>([]);
+const Highlighter = ({ stageRef }: HighlighterProps) => {
+  const [lines, setLines] = useRecoilState(HighlighterAtom);
 
   useEffect(() => {
-    const stage = stageRef.current;
+    const stage = stageRef?.current;
     if (!stage) return;
 
-    const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) => {
+    const handleMouseDown = () => {
       const pos = stage.getPointerPosition();
       if (!pos) return;
       setLines(prevLines => [...prevLines, { points: [pos.x, pos.y] }]);
@@ -28,10 +28,10 @@ const Highlighter = () => {
       const pos = stage.getPointerPosition();
       if (!pos) return;
       setLines(prevLines => {
-        const updatedLines = [...prevLines];
-        const lastLine = updatedLines[updatedLines.length - 1];
-        lastLine.points = lastLine.points.concat([pos.x, pos.y]);
-        return updatedLines;
+        const lastLineIndex = prevLines.length - 1;
+        return [...prevLines].map(({ points }, index) =>
+          index === lastLineIndex ? { points: points.concat([pos.x, pos.y]) } : { points },
+        );
       });
     };
 
@@ -43,26 +43,22 @@ const Highlighter = () => {
       stage.off('mousedown touchstart', handleMouseDown);
       stage.off('mousemove touchmove', handleMouseMove);
     };
-  }, [stageRef.current]);
+  }, [stageRef?.current]);
 
   return (
-    <S.HighlighterWrapper>
-      <Stage width={window.innerWidth} height={window.innerHeight} ref={stageRef}>
-        <Layer>
-          {lines.map((line, i) => (
-            <Line
-              key={i}
-              points={line.points}
-              stroke="rgba(255, 255, 0, 0.5)" // 형광펜의 색상 설정
-              strokeWidth={20} // 형광펜의 두께 설정
-              globalCompositeOperation="source-over" // 형광펜의 블렌딩 모드 설정
-              lineCap="butt"
-              lineJoin="round"
-            />
-          ))}
-        </Layer>
-      </Stage>
-    </S.HighlighterWrapper>
+    <S.HighlighterLayer>
+      {lines.map((line, i) => (
+        <Line
+          key={i}
+          points={line.points}
+          stroke="rgba(255, 255, 0, 0.5)" // 형광펜의 색상 설정
+          strokeWidth={20} // 형광펜의 두께 설정
+          globalCompositeOperation="source-over" // 형광펜의 블렌딩 모드 설정
+          lineCap="butt"
+          lineJoin="round"
+        />
+      ))}
+    </S.HighlighterLayer>
   );
 };
 

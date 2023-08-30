@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
+import { RecoilRoot } from 'recoil';
+import { Stage } from 'react-konva';
+import type Konva from 'konva';
 
 import { DockBar, Highlighter, Stamp, AntGroup } from '@components';
-import { Fireworks } from './lib/Fireworks/Fireworks';
 import { ToolType } from '@types';
+import { Bubble } from './components/Bubble';
 
 interface ContentWrapperProps {
   isActive: boolean;
@@ -25,7 +28,7 @@ interface ContentAppProps {
 }
 
 const ContentApp = ({ isDev }: ContentAppProps) => {
-  const [tool, selectTool] = useState<ToolType>('firework');
+  const [tool, selectTool] = useState<ToolType>('bubble');
   const [isContentActive, setIsContentActive] = useState(Boolean(isDev));
 
   useEffect(() => {
@@ -40,23 +43,27 @@ const ContentApp = ({ isDev }: ContentAppProps) => {
   }, []);
 
   return (
-    <ContentWrapper isActive={isContentActive}>
-      {(() => {
-        switch (tool) {
-          case 'firework':
-            return <Fireworks />;
-          case 'highlighter':
-            return <Highlighter />;
-          case 'stamp':
-            return <Stamp />;
-          case 'ant':
-            return <AntGroup />;
-          default:
-            return <></>;
-        }
-      })()}
-      <DockBar selectTool={selectTool} />
-    </ContentWrapper>
+    <RecoilRoot>
+      <ContentWrapper isActive={isContentActive}>
+        <Workbench tool={tool} />
+        <DockBar selectTool={selectTool} />
+      </ContentWrapper>
+    </RecoilRoot>
+  );
+};
+
+const Workbench = ({ tool }: { tool: ToolType }) => {
+  const stageRef = useRef<Konva.Stage>(null);
+
+  return (
+    <div style={{ position: 'fixed', top: 0, left: 0, zIndex: 9000 }}>
+      <Stage width={window.innerWidth} height={window.innerHeight} ref={stageRef}>
+        <Highlighter stageRef={tool === 'highlighter' ? stageRef : null} />
+        <Stamp stageRef={tool === 'stamp' ? stageRef : null} />
+        <AntGroup stageRef={tool === 'ant' ? stageRef : null} />
+        <Bubble stageRef={tool === 'bubble' ? stageRef : null} />
+      </Stage>
+    </div>
   );
 };
 

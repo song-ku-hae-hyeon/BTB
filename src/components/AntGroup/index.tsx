@@ -1,25 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { Layer, Stage, Rect, Text } from 'react-konva';
-import Ant from './Ant';
+import { useEffect } from 'react';
+import type { RefObject } from 'react';
+import { Layer } from 'react-konva';
+import type Konva from 'konva';
+import { useRecoilState } from 'recoil';
 import { AntProps } from './types';
 import DeadAnt from './DeadAnt';
 
-const AntGroup = () => {
-  const [ants, setAnts] = useState<AntProps[]>([]);
+import { AntAtom, AntData } from '@recoil';
+import Ant from './Ant';
+
+type AntGroupProps = {
+  stageRef: RefObject<Konva.Stage> | null;
+};
+
+const AntGroup = ({ stageRef }: AntGroupProps) => {
+  const [ants, setAnts] = useRecoilState(AntAtom);
 
   useEffect(() => {
-    const handleClick = (ev: MouseEvent) => {
-      if (!(ev.target as HTMLElement).closest('.konvajs-content')) return;
-      const x = ev.offsetX;
-      const y = ev.offsetY;
-      if (!ev.shiftKey)
+    const handleClick = ({ evt }: Konva.KonvaEventObject<MouseEvent>) => {
+      if (!(evt.target as HTMLElement).closest('.konvajs-content')) return;
+      const x = evt.offsetX;
+      const y = evt.offsetY;
+      if (!evt.shiftKey)
         return setAnts([...ants, { x, y, vx: Math.random() - 0.5, vy: Math.random() - 0.5, dead: false }]);
       const newAnts = ants.map(ant =>
         Math.abs(ant.x - x) < 20 && Math.abs(ant.y - y) < 20 ? { ...ant, dead: true } : { ...ant },
       );
       setAnts(newAnts);
     };
-    document.body.addEventListener('click', handleClick);
+
+    const stage = stageRef?.current;
+    if (stage) {
+      stage.on('click', handleClick);
+    }
 
     const updateAnt = (ant: AntProps) => {
       if (ant.dead) return { ...ant };
@@ -37,15 +50,13 @@ const AntGroup = () => {
     const id = requestAnimationFrame(setupFrame);
 
     return () => {
-      document.body.removeEventListener('click', handleClick);
+      stage?.off('click', handleClick);
       cancelAnimationFrame(id);
     };
   }, [ants]);
 
   return (
-    <Stage width={window.innerWidth} height={window.innerHeight}>
-      <Layer>{ants.map((ant, idx) => (ant.dead ? <DeadAnt {...ant} key={idx} /> : <Ant {...ant} key={idx} />))}</Layer>
-    </Stage>
+    <Layer>{ants.map((ant, idx) => (ant.dead ? <DeadAnt {...ant} key={idx} /> : <Ant {...ant} key={idx} />))}</Layer>
   );
 };
 

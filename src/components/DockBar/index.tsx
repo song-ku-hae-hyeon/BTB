@@ -11,10 +11,10 @@ const DockBar = ({ selectTool }: DockBarProps) => {
 
   return (
     <S.DockBarWrapper>
-      <IconButton icon="firework" onClickBtn={() => onClickBtn('firework')} />
       <IconButton icon="highlighter" onClickBtn={() => onClickBtn('highlighter')} />
       <IconButton icon="stamp" onClickBtn={() => onClickBtn('stamp')} />
       <IconButton icon="ant" onClickBtn={() => onClickBtn('ant')} />
+      <IconButton icon="bubble" onClickBtn={() => onClickBtn('bubble')} />
     </S.DockBarWrapper>
   );
 };
