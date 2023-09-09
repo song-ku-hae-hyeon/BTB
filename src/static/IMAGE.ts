@@ -1,6 +1,6 @@
 // @ts-nocheck
-import highlighter from '@public/highlighter.png';
-import stamp from '@public/stamp.png';
+import highlighter from '@public/highlighter_64.png';
+import stamp from '@public/stamp_64.png';
 import stamp_mark from '@public/stamp_mark.png';
 
 const HIGHLIGHTER_URL = highlighter;

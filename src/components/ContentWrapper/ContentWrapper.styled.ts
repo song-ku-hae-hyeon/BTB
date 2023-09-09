@@ -6,7 +6,7 @@ import type { ToolType } from '@types';
 
 const cursorImage: Record<ToolType, string> = {
   highlighter: `url(${IMAGE.HIGHLIGHTER_URL}) 8 64, auto;`,
-  stamp: `url(${IMAGE.STAMP_URL}) 0 0 ,auto;`,
+  stamp: `url(${IMAGE.STAMP_URL}) 32 64 ,auto;`,
   ant: `default`,
   bubble: `default`,
 };
