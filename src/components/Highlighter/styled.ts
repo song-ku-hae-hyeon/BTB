@@ -6,7 +6,6 @@ const HighlighterLayer = styled(Layer)`
   top: 0;
   left: 0;
   z-index: 9000;
-  background-color: red;
 `;
 
 export default { HighlighterLayer };
