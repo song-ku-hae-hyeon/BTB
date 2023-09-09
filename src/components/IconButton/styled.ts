@@ -6,7 +6,7 @@ import type { ButtonProps } from './types';
 const iconImage: Record<string, string> = {
   highlighter: `url(${IMAGE.HIGHLIGHTER_URL})`,
   stamp: `url(${IMAGE.STAMP_URL})`,
-  ant: `url(${IMAGE.ANT_URL})`,
+  ant: `url(${IMAGE.ANT1_URL})`,
   bubble: 'none',
 };
 
