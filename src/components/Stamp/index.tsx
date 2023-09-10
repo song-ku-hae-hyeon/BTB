@@ -8,6 +8,7 @@ import { IMAGE } from '@static';
 import { IRect, Vector2d } from 'konva/lib/types';
 import { useRecoilState } from 'recoil';
 import { StampAtom } from '@recoil';
+import { useAntKiller } from '../../hooks/useAntKiller';
 
 const MARK_SIZE = 100;
 const imageObj = new Image();
@@ -20,6 +21,7 @@ type PaperProps = {
 const Paper = ({ stageRef }: PaperProps) => {
   const [stampPositions, setStampPositions] = useRecoilState(StampAtom);
   const imgRef = useRef<HTMLImageElement>(null);
+  const { ants, killIfInRange } = useAntKiller(MARK_SIZE, MARK_SIZE);
 
   useEffect(() => {
     const stage = stageRef?.current;
@@ -52,6 +54,7 @@ const Paper = ({ stageRef }: PaperProps) => {
 
       drawStampMark(clientX, clientY);
       stampSeal(clientX, clientY);
+      killIfInRange(clientX, clientY);
     };
 
     const handleMouseMove = (event: Konva.KonvaEventObject<MouseEvent>) => {
@@ -71,7 +74,7 @@ const Paper = ({ stageRef }: PaperProps) => {
       stage.off('mousedown', handleMouseDown);
       stage.off('mousemove', handleMouseMove);
     };
-  }, [stageRef?.current]);
+  }, [stageRef?.current, ants]);
 
   return (
     <Layer>
