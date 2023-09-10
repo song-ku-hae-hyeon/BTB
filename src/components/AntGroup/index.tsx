@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import type { RefObject } from 'react';
 import { Layer } from 'react-konva';
 import type Konva from 'konva';
-import { AntProps } from './types';
 import DeadAnt from './DeadAnt';
 import { useAntKiller } from '../../hooks/useAntKiller';
 
 import Ant from './Ant';
+import { AntData } from '@recoil';
 
 type AntGroupProps = {
   stageRef: RefObject<Konva.Stage> | null;
@@ -30,7 +30,7 @@ const AntGroup = ({ stageRef }: AntGroupProps) => {
       stage.on('click', handleClick);
     }
 
-    const updateAnt = (ant: AntProps) => {
+    const updateAnt = (ant: AntData) => {
       if (ant.dead) return { ...ant };
       const x = ant.x + ant.vx;
       const y = ant.y + ant.vy;
