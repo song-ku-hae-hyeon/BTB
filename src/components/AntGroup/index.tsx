@@ -6,7 +6,6 @@ import DeadAnt from './DeadAnt';
 import { useAntKiller } from '../../hooks/useAntKiller';
 
 import Ant from './Ant';
-import { AntData } from '@recoil';
 
 type AntGroupProps = {
   stageRef: RefObject<Konva.Stage> | null;
@@ -30,24 +29,8 @@ const AntGroup = ({ stageRef }: AntGroupProps) => {
       stage.on('click', handleClick);
     }
 
-    const updateAnt = (ant: AntData) => {
-      if (ant.dead) return { ...ant };
-      const x = ant.x + ant.vx;
-      const y = ant.y + ant.vy;
-      let vx = ant.vx;
-      let vy = ant.vy;
-      if (x >= window.innerWidth || x < 0) vx *= -1;
-      if (y >= window.innerHeight || y < 0) vy *= -1;
-      return { ...ant, x, y, vx, vy };
-    };
-    const setupFrame = () => {
-      setAnts(ants.map(updateAnt));
-    };
-    const id = requestAnimationFrame(setupFrame);
-
     return () => {
       stage?.off('click', handleClick);
-      cancelAnimationFrame(id);
     };
   }, [ants]);
 
