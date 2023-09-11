@@ -1,7 +1,8 @@
-import type { MouseEventHandler, RefObject } from 'react';
+import type { RefObject } from 'react';
 import type Konva from 'konva';
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { Layer } from 'react-konva';
+import { Stage } from 'konva/lib/Stage';
 
 const getRandomInt = (min: number, max: number) => Math.round(Math.random() * (max - min + 1)) + min;
 const getBackgroundColor = () => `rgb(${getRandomInt(0, 255)},${getRandomInt(0, 255)},${getRandomInt(0, 255)});`;
@@ -13,10 +14,7 @@ type BubbleProps = {
 export const Bubble = ({ stageRef }: BubbleProps) => {
   const mousePosRef = useRef<{ x: null | number; y: null | number }>({ x: null, y: null });
 
-  const draw = useCallback(() => {
-    const { x, y } = mousePosRef.current;
-    if (x === null || y === null) return;
-
+  const createBubble = useCallback((x: number, y: number) => {
     const range = 15;
     const sizeInt = getRandomInt(10, 30);
     const style = `
@@ -26,75 +24,68 @@ export const Bubble = ({ stageRef }: BubbleProps) => {
       background: ${getBackgroundColor()}
       pointer-events: none;
       position: absolute;
-
       border-radius: 50%;
-      background: gray;
-      animation: implode 1s ease-in-out;
-      animation-fill-mode: both;
-      opacity: 0.5;
-    
-      @keyframes implode {
-        100% {
-          transform: scale(0);
-        }
-      }
+      opacity: 0.5;  
     `;
+
     const bubbleElement = document.createElement('div');
     bubbleElement.setAttribute('style', style);
-    bubbleElement.setAttribute('className', 'bubble');
+    bubbleElement.setAttribute('class', 'bubble');
     document.querySelector('body')?.appendChild(bubbleElement);
+    removeBubble(bubbleElement);
   }, []);
 
+  const removeBubble = useCallback(
+    (bubbleElement: HTMLDivElement) => setTimeout(() => bubbleElement.remove(), 1000),
+    [],
+  );
+
   useEffect(() => {
-    const handleMouseMove = () => {
-      const stage = stageRef?.current;
-      if (!stage) return;
-      const pos = stage.getPointerPosition();
-      if (!pos) return;
-      mousePosRef.current.x = pos.x;
-      mousePosRef.current.y = pos.y;
+    const createBubbles = () => {
+      const { x, y } = mousePosRef.current;
+      const inActive = stageRef?.current === undefined;
+      if (x === null || y === null || inActive) {
+        return;
+      }
+      createBubble(x, y);
     };
-    const handleMouseLeave = () => {
-      if (mousePosRef.current !== null) {
-        const { x, y } = mousePosRef.current;
-        if (x !== null && y !== null) {
-          mousePosRef.current.x = x - 1;
-          mousePosRef.current.y = y - 1;
-        }
+
+    const removeAllBubbles = () => {
+      // 그려진 버블을 지운다
+      document.querySelectorAll('.bubble').forEach(element => element.remove());
+
+      // 모든 버블을 그리는 interval을 종료시킨다
+      const interval_id = window.setInterval(function () {}, Number.MAX_SAFE_INTEGER);
+      for (let i = 1; i < interval_id; i++) {
+        window.clearInterval(i);
+      }
+    };
+
+    setInterval(createBubbles, 50);
+    if (stageRef?.current === undefined) {
+      removeAllBubbles();
+    }
+  }, [stageRef?.current]);
+
+  useEffect(() => {
+    const handleMouseMove = (stage: Stage) => {
+      const pos = stage.getPointerPosition();
+      if (pos) {
+        mousePosRef.current.x = pos.x;
+        mousePosRef.current.y = pos.y;
       }
     };
 
     const stage = stageRef?.current;
-    if (!stage) return;
-    stage.on('mousemove', handleMouseMove);
-    stage.on('mouseleave', handleMouseLeave);
+    if (!stage) {
+      return;
+    }
 
+    stage.on('mousemove', () => handleMouseMove(stage));
     return () => {
-      stage.off('mousemove', handleMouseMove);
-      stage.off('mouseleave', handleMouseLeave);
+      stage.off('mousemove', () => handleMouseMove(stage));
     };
-  }, []);
+  }, [stageRef?.current]);
 
-  useEffect(() => {
-    setInterval(() => draw(), 10);
-  }, []);
-
-  useEffect(() => {
-    const removeBubble = () => document.querySelectorAll('.bubble').forEach(element => element.remove());
-    window.addEventListener('webkitanimationend', removeBubble);
-    window.addEventListener('mozAnimationEnd', removeBubble);
-    window.addEventListener('animationend', removeBubble);
-
-    return () => {
-      window.removeEventListener('webkitanimationend', removeBubble);
-      window.removeEventListener('mozAnimationEnd', removeBubble);
-      window.removeEventListener('animationend', removeBubble);
-    };
-  }, []);
-
-  return (
-    <Layer style={{ width: '100%', height: '100%' }}>
-      <div id="bubbleLayer"></div>
-    </Layer>
-  );
+  return <Layer style={{ width: '100%', height: '100%' }}></Layer>;
 };
