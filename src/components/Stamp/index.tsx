@@ -16,8 +16,6 @@ stampMarkImage.src = IMAGE.STAMP_MARK_URL;
 const stampImage = new Image();
 stampImage.src = IMAGE.STAMP_URL;
 
-let movingStampImage: KonvaImageType | null;
-
 type PaperProps = {
   stageRef: RefObject<Konva.Stage> | null;
 };
@@ -32,6 +30,11 @@ const Paper = ({ stageRef }: PaperProps) => {
     const stage = stageRef?.current;
     if (!stage) return;
 
+    // @ts-ignore
+    const container = stage.container();
+
+    container.style.cursor = `url(${IMAGE.STAMP_URL}), auto`;
+
     const handleMouseDown = ({ evt: { clientX, clientY } }: Konva.KonvaEventObject<MouseEvent>) => {
       const drawStampMark = (clientX: number, clientY: number) => {
         const curPointerPos: Vector2d = { x: clientX, y: clientY };
@@ -41,31 +44,26 @@ const Paper = ({ stageRef }: PaperProps) => {
       const currentX = clientX - 30;
       const currentY = clientY - 90;
 
-      layerRef.current?.add(
-        new Konva.Image({
-          image: stampImage,
-          ref: (node: Konva.Image) => {
-            movingStampImage = node;
-          },
-        }),
-      );
-      if (movingStampImage) {
-        movingStampImage.show();
-        movingStampImage.setPosition({ x: currentX, y: currentY });
-        movingStampImage.to({
-          x: currentX,
-          y: currentY + 40,
-          onFinish: () => {
-            movingStampImage?.to({
-              x: currentX,
-              y: currentY,
-              onFinish: () => {
-                movingStampImage?.hide();
-              },
-            });
-          },
-        });
-      }
+      const movingStampImage = new Konva.Image({
+        image: stampImage,
+      });
+      layerRef.current?.add(movingStampImage);
+
+      movingStampImage.show();
+      movingStampImage.setPosition({ x: currentX, y: currentY });
+      movingStampImage.to({
+        x: currentX,
+        y: currentY + 40,
+        onFinish: () => {
+          movingStampImage?.to({
+            x: currentX,
+            y: currentY,
+            onFinish: () => {
+              movingStampImage?.hide();
+            },
+          });
+        },
+      });
 
       drawStampMark(clientX, clientY);
     };
@@ -75,6 +73,7 @@ const Paper = ({ stageRef }: PaperProps) => {
     // Clean up event listeners
     return () => {
       stage.off('mousedown', handleMouseDown);
+      container.style.cursor = 'auto';
     };
   }, [stageRef?.current]);
 
