@@ -28,7 +28,7 @@ interface ContentAppProps {
 }
 
 const ContentApp = ({ isDev }: ContentAppProps) => {
-  const [tool, selectTool] = useState<ToolType>('highlighter');
+  const [tool, selectTool] = useState<ToolType>('bubble');
   const [isContentActive, setIsContentActive] = useState(Boolean(isDev));
 
   useEffect(() => {
