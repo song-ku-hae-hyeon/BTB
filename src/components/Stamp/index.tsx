@@ -8,18 +8,25 @@ import { IMAGE } from '@static';
 import { IRect, Vector2d } from 'konva/lib/types';
 import { useRecoilState } from 'recoil';
 import { StampAtom } from '@recoil';
+import { Image as KonvaImageType } from 'konva/lib/shapes/Image';
 
 const MARK_SIZE = 100;
-const imageObj = new Image();
-imageObj.src = IMAGE.STAMP_MARK_URL;
+const stampMarkImage = new Image();
+stampMarkImage.src = IMAGE.STAMP_MARK_URL;
+const stampImage = new Image();
+stampImage.src = IMAGE.STAMP_URL;
+
+let movingStampImage: KonvaImageType | null;
 
 type PaperProps = {
   stageRef: RefObject<Konva.Stage> | null;
 };
 
 const Paper = ({ stageRef }: PaperProps) => {
+  const [isClicked, setClicked] = useState(false);
+  const [clickPos, setClickPos] = useState({ x: 0, y: 0 });
   const [stampPositions, setStampPositions] = useRecoilState(StampAtom);
-  const imgRef = useRef<HTMLImageElement>(null);
+  const layerRef = useRef<Konva.Layer>(null);
 
   useEffect(() => {
     const stage = stageRef?.current;
@@ -31,54 +38,52 @@ const Paper = ({ stageRef }: PaperProps) => {
         setStampPositions(prevArray => [...prevArray, { ...curPointerPos, cropRect: cropStamp() }]);
       };
 
-      const stampSeal = (clientX: number, clientY: number) => {
-        if (imgRef.current) {
-          // imgRef.current.animate(
-          //   [
-          //     {
-          //       transform: `translate3d(${clientX - 30}px, ${clientY - 90}px, 0)`,
-          //     },
-          //     {
-          //       transform: `translate3d(${clientX - 30}px, ${clientY - 50}px, 0)`,
-          //     },
-          //     {
-          //       transform: `translate3d(${clientX - 30}px, ${clientY - 90}px, 0)`,
-          //     },
-          //   ],
-          //   { duration: 300, iterations: 1 },
-          // );
-        }
-      };
+      const currentX = clientX - 30;
+      const currentY = clientY - 90;
+
+      layerRef.current?.add(
+        new Konva.Image({
+          image: stampImage,
+          ref: (node: Konva.Image) => {
+            movingStampImage = node;
+          },
+        }),
+      );
+      if (movingStampImage) {
+        movingStampImage.show();
+        movingStampImage.setPosition({ x: currentX, y: currentY });
+        movingStampImage.to({
+          x: currentX,
+          y: currentY + 40,
+          onFinish: () => {
+            movingStampImage?.to({
+              x: currentX,
+              y: currentY,
+              onFinish: () => {
+                movingStampImage?.hide();
+              },
+            });
+          },
+        });
+      }
 
       drawStampMark(clientX, clientY);
-      stampSeal(clientX, clientY);
-    };
-
-    const handleMouseMove = (event: Konva.KonvaEventObject<MouseEvent>) => {
-      event.evt.preventDefault();
-      const mouseY = event.evt.clientY;
-      const mouseX = event.evt.clientX;
-      if (imgRef.current) {
-        // imgRef.current.style.transform = `translate3d(${mouseX - 30}px, ${mouseY - 70}px, 0)`;
-      }
     };
 
     stage.on('mousedown', handleMouseDown);
-    stage.on('mousemove', handleMouseMove);
 
     // Clean up event listeners
     return () => {
       stage.off('mousedown', handleMouseDown);
-      stage.off('mousemove', handleMouseMove);
     };
   }, [stageRef?.current]);
 
   return (
-    <Layer>
+    <Layer ref={layerRef}>
       {stampPositions.map((position, index) => (
         <KonvaImage
           key={`${index}-key`}
-          image={imageObj}
+          image={stampMarkImage}
           x={position.x - MARK_SIZE / 2}
           y={position.y + 10 - MARK_SIZE / 2}
           width={MARK_SIZE}
@@ -86,7 +91,6 @@ const Paper = ({ stageRef }: PaperProps) => {
           crop={position.cropRect}
         />
       ))}
-      <S.Stamp src="/stamp.png" ref={imgRef} />
     </Layer>
   );
 };
