@@ -1,6 +1,6 @@
-import { ToolType } from '../../types';
+import { ToolType } from '@types';
 
 export interface ButtonProps {
-  icon: string; // TODO: 추후 svg
+  icon: ToolType;
   onClickBtn: () => void;
 }

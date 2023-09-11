@@ -1,27 +1,10 @@
 import { useEffect, useState, useRef } from 'react';
-import styled from 'styled-components';
 import { RecoilRoot } from 'recoil';
 import { Stage } from 'react-konva';
-import type Konva from 'konva';
-
-import { DockBar, Highlighter, Stamp, AntGroup } from '@components';
+import { ContentWrapper, DockBar, Highlighter, Stamp, AntGroup } from '@components';
 import { ToolType } from '@types';
 import { Bubble } from './components/Bubble';
-
-interface ContentWrapperProps {
-  isActive: boolean;
-}
-
-const ContentWrapper = styled.div<ContentWrapperProps>`
-  display: ${({ isActive }) => (isActive ? 'flex' : 'none')};
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  width: 100vw;
-  z-index: 999;
-`;
+import type Konva from 'konva';
 
 interface ContentAppProps {
   isDev?: boolean;
@@ -44,7 +27,7 @@ const ContentApp = ({ isDev }: ContentAppProps) => {
 
   return (
     <RecoilRoot>
-      <ContentWrapper isActive={isContentActive}>
+      <ContentWrapper isActive={isContentActive} tool={tool}>
         <Workbench tool={tool} />
         <DockBar selectTool={selectTool} />
       </ContentWrapper>

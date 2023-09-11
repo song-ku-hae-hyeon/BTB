@@ -7,6 +7,7 @@ import { IMAGE } from '@static';
 import { Vector2d } from 'konva/lib/types';
 import { useRecoilState } from 'recoil';
 import { StampAtom } from '@recoil';
+import { useAntKiller } from '../../hooks/useAntKiller';
 
 const MARK_SIZE = 100;
 const stampMarkImage = new Image();
@@ -21,6 +22,7 @@ type PaperProps = {
 const Paper = ({ stageRef }: PaperProps) => {
   const [stampPositions, setStampPositions] = useRecoilState(StampAtom);
   const layerRef = useRef<Konva.Layer>(null);
+  const { ants, killIfInRange } = useAntKiller(MARK_SIZE, MARK_SIZE);
 
   useEffect(() => {
     const stage = stageRef?.current;
@@ -61,6 +63,7 @@ const Paper = ({ stageRef }: PaperProps) => {
       });
 
       drawStampMark(clientX, clientY);
+      killIfInRange(clientX, clientY);
     };
 
     stage.on('mousedown', handleMouseDown);
@@ -70,7 +73,7 @@ const Paper = ({ stageRef }: PaperProps) => {
       stage.off('mousedown', handleMouseDown);
       container.style.cursor = 'auto';
     };
-  }, [stageRef?.current]);
+  }, [stageRef?.current, ants]);
 
   return (
     <Layer ref={layerRef}>
