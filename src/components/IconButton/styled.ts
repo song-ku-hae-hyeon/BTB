@@ -1,16 +1,31 @@
 import styled from 'styled-components';
+import { IMAGE } from '@static';
 
-const ButtonWrapper = styled.button`
+import type { ButtonProps } from './types';
+
+const iconImage: Record<string, string> = {
+  highlighter: `url(${IMAGE.HIGHLIGHTER_URL})`,
+  stamp: `url(${IMAGE.STAMP_URL})`,
+  ant: `url(${IMAGE.ANT1_URL})`,
+  bubble: 'none',
+};
+
+const ButtonWrapper = styled.button<Pick<ButtonProps, 'icon'>>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 72px;
-  height: 72px;
-  border-radius: 5px;
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
   border-style: none;
-  background-color: none;
+  background-color: rgba(255, 255, 255, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: ${({ icon }) => iconImage[icon]};
+  background-size: 48px;
+  transition: all 300ms;
   &:hover {
-    background-color: rgba(150, 150, 150, 0.5);
+    background-size: 64px;
   }
 `;
 
