@@ -10,7 +10,7 @@ export const HighlighterAtom = atom<HighlighterLineData[]>({
   default: [],
 });
 
-export type Stamp = Vector2d & { cropRect: IRect };
+export type Stamp = Vector2d;
 
 export const StampAtom = atom<Stamp[]>({
   key: 'stampAtom',

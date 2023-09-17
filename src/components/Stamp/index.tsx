@@ -9,7 +9,7 @@ import { useRecoilState } from 'recoil';
 import { StampAtom } from '@recoil';
 import { useAntKiller } from '../../hooks/useAntKiller';
 
-const MARK_SIZE = 100;
+const MARK_SIZE = 64;
 const stampMarkImage = new Image();
 stampMarkImage.src = IMAGE.STAMP_MARK_URL;
 const stampImage = new Image();
@@ -35,7 +35,7 @@ const Paper = ({ stageRef }: PaperProps) => {
     const handleMouseDown = ({ evt: { clientX, clientY } }: Konva.KonvaEventObject<MouseEvent>) => {
       const drawStampMark = (clientX: number, clientY: number) => {
         const curPointerPos: Vector2d = { x: clientX, y: clientY };
-        setStampPositions(prevArray => [...prevArray, { ...curPointerPos, cropRect: cropStamp() }]);
+        setStampPositions(prevArray => [...prevArray, { ...curPointerPos }]);
       };
 
       const currentX = clientX - 30;
@@ -85,25 +85,10 @@ const Paper = ({ stageRef }: PaperProps) => {
           y={position.y + 10 - MARK_SIZE / 2}
           width={MARK_SIZE}
           height={MARK_SIZE}
-          crop={position.cropRect}
         />
       ))}
     </Layer>
   );
-};
-
-const cropStamp = () => {
-  const width = 566;
-  const height = 393;
-  const widthCount = 3;
-  const heightCount = 2;
-
-  return {
-    x: (width / widthCount) * Math.floor(Math.random() * widthCount),
-    y: (height / heightCount) * Math.floor(Math.random() * heightCount),
-    width: width / widthCount,
-    height: height / heightCount,
-  };
 };
 
 export default Paper;
