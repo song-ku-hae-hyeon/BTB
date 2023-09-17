@@ -30,7 +30,7 @@ const Paper = ({ stageRef }: PaperProps) => {
 
     const container = stage.container();
 
-    container.style.cursor = `url(${IMAGE.STAMP_URL}) 30 56, auto`;
+    container.style.cursor = `none, url(${IMAGE.STAMP_URL}) 30 56, auto`;
 
     const handleMouseDown = ({ evt: { clientX, clientY } }: Konva.KonvaEventObject<MouseEvent>) => {
       const drawStampMark = (clientX: number, clientY: number) => {
@@ -51,10 +51,12 @@ const Paper = ({ stageRef }: PaperProps) => {
       movingStampImage.to({
         x: currentX,
         y: currentY + 40,
+        zIndex: 20,
         onFinish: () => {
           movingStampImage?.to({
             x: currentX,
             y: currentY,
+            zIndex: 20,
             onFinish: () => {
               movingStampImage?.remove();
             },
@@ -85,6 +87,7 @@ const Paper = ({ stageRef }: PaperProps) => {
           y={position.y + 10 - MARK_SIZE / 2}
           width={MARK_SIZE}
           height={MARK_SIZE}
+          zIndex={10}
         />
       ))}
     </Layer>
