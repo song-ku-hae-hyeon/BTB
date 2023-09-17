@@ -9,7 +9,8 @@ import { useRecoilState } from 'recoil';
 import { StampAtom } from '@recoil';
 import { useAntKiller } from '../../hooks/useAntKiller';
 
-const MARK_SIZE = 64;
+const MARK_IMAGE_SIZE = 64;
+const MARK_EFFECT_SIZE = MARK_IMAGE_SIZE - 15;
 const stampMarkImage = new Image();
 stampMarkImage.src = IMAGE.STAMP_MARK_URL;
 const stampImage = new Image();
@@ -22,7 +23,7 @@ type PaperProps = {
 const Paper = ({ stageRef }: PaperProps) => {
   const [stampPositions, setStampPositions] = useRecoilState(StampAtom);
   const layerRef = useRef<Konva.Layer>(null);
-  const { ants, killIfInRange } = useAntKiller(MARK_SIZE, MARK_SIZE);
+  const { ants, killIfInRange } = useAntKiller(MARK_EFFECT_SIZE, MARK_EFFECT_SIZE);
 
   useEffect(() => {
     const stage = stageRef?.current;
@@ -83,10 +84,10 @@ const Paper = ({ stageRef }: PaperProps) => {
         <KonvaImage
           key={`${index}-key`}
           image={stampMarkImage}
-          x={position.x - MARK_SIZE / 2}
-          y={position.y + 10 - MARK_SIZE / 2}
-          width={MARK_SIZE}
-          height={MARK_SIZE}
+          x={position.x - MARK_IMAGE_SIZE / 2}
+          y={position.y + 10 - MARK_IMAGE_SIZE / 2}
+          width={MARK_IMAGE_SIZE}
+          height={MARK_IMAGE_SIZE}
           zIndex={10}
         />
       ))}
