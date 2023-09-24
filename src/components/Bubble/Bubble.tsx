@@ -1,6 +1,6 @@
 import type { RefObject } from 'react';
 import type Konva from 'konva';
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import { Layer } from 'react-konva';
 import { Stage } from 'konva/lib/Stage';
 
@@ -61,7 +61,14 @@ export const Bubble = ({ stageRef }: BubbleProps) => {
       }
     };
 
-    setInterval(createBubbles, 50);
+    let intervalId: any;
+    stageRef?.current?.on('mousedown', () => {
+      intervalId = setInterval(createBubbles, 30);
+    });
+    stageRef?.current?.on('mouseup', () => {
+      clearInterval(intervalId);
+    });
+
     if (stageRef?.current === undefined) {
       removeAllBubbles();
     }
