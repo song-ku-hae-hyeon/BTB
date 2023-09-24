@@ -13,6 +13,14 @@ const ANT1_URL = ant1 as string;
 const ANT2_URL = ant2 as string;
 const DEAD_ANT_URL = ant_dead as string;
 
+export const CURSOR_URL: Record<ToolType, string> = {
+  none: '',
+  highlighter: HIGHLIGHTER_URL,
+  stamp: STAMP_URL,
+  ant: '',
+  bubble: '',
+};
+
 export default {
   HIGHLIGHTER_URL,
   STAMP_URL,
