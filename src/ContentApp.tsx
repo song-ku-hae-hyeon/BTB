@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useRecoilState } from 'recoil';
-import { ContentWrapper, DockBar, Highlighter, Stamp, AntGroup } from '@components';
+import { ContentWrapper, DockBar, Highlighter, Stamp, AntGroup, Hammer } from '@components';
 import { ToolType } from '@types';
 import { Bubble } from './components/Bubble';
 import type Konva from 'konva';
@@ -46,6 +46,7 @@ const Workbench = ({ tool }: { tool: ToolType }) => {
         <Stamp stageRef={tool === 'stamp' ? stageRef : null} />
         <AntGroup stageRef={tool === 'ant' ? stageRef : null} />
         <Bubble stageRef={tool === 'bubble' ? stageRef : null} />
+        <Hammer stageRef={tool === 'hammer' ? stageRef : null} />
       </Stage>
     </div>
   );

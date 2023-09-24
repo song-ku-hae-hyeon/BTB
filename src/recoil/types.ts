@@ -18,3 +18,5 @@ export interface ShakeProps {
   shouldShake: boolean;
   duration: number;
 }
+
+export type Crash = Vector2d & { rotation: number };
