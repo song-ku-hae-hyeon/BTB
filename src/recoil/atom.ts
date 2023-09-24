@@ -1,6 +1,8 @@
 import { atom } from 'recoil';
 import { IRect, Vector2d } from 'konva/lib/types';
 
+import type { ToolType } from '@types';
+
 export interface HighlighterLineData {
   points: number[];
 }
@@ -28,4 +30,9 @@ export interface AntData {
 export const AntAtom = atom<AntData[]>({
   key: 'antAtom',
   default: [],
+});
+
+export const ToolAtom = atom<ToolType>({
+  key: 'toolAtom',
+  default: 'none',
 });
