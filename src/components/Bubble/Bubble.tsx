@@ -6,7 +6,10 @@ import { Stage } from 'konva/lib/Stage';
 import { useEraser } from '../../hooks/useEraser';
 
 const getRandomInt = (min: number, max: number) => Math.round(Math.random() * (max - min + 1)) + min;
-const getBackgroundColor = () => `rgb(${getRandomInt(0, 255)},${getRandomInt(0, 255)},${getRandomInt(0, 255)});`;
+const getBackgroundColor = () => {
+  const c = getRandomInt(0, 255);
+  return `rgb(${[c, c, c].join(',')});`;
+};
 
 type BubbleProps = {
   stageRef: RefObject<Konva.Stage> | null;
