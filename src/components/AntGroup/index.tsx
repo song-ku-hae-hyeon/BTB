@@ -3,7 +3,7 @@ import type { RefObject } from 'react';
 import { Layer } from 'react-konva';
 import type Konva from 'konva';
 import DeadAnt from './DeadAnt';
-import { useAntKiller } from '../../hooks/useAntKiller';
+import { useAntKiller } from '@hooks';
 
 import Ant from './Ant';
 

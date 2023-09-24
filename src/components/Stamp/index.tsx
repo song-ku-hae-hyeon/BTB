@@ -7,7 +7,7 @@ import { IMAGE } from '@static';
 import { Vector2d } from 'konva/lib/types';
 import { useRecoilState } from 'recoil';
 import { StampAtom } from '@recoil';
-import { useAntKiller } from '../../hooks/useAntKiller';
+import { useAntKiller, useMove } from '@hooks';
 
 const MARK_SIZE = 100;
 const stampMarkImage = new Image();
@@ -24,56 +24,16 @@ const Paper = ({ stageRef }: PaperProps) => {
   const layerRef = useRef<Konva.Layer>(null);
   const { ants, killIfInRange } = useAntKiller(MARK_SIZE, MARK_SIZE);
 
-  useEffect(() => {
-    const stage = stageRef?.current;
-    if (!stage) return;
-
-    const container = stage.container();
-
-    container.style.cursor = `url(${IMAGE.STAMP_URL}) 30 56, auto`;
-
-    const handleMouseDown = ({ evt: { clientX, clientY } }: Konva.KonvaEventObject<MouseEvent>) => {
-      const drawStampMark = (clientX: number, clientY: number) => {
-        const curPointerPos: Vector2d = { x: clientX, y: clientY };
-        setStampPositions(prevArray => [...prevArray, { ...curPointerPos, cropRect: cropStamp() }]);
-      };
-
-      const currentX = clientX - 30;
-      const currentY = clientY - 90;
-
-      const movingStampImage = new Konva.Image({
-        image: stampImage,
-      });
-      layerRef.current?.add(movingStampImage);
-
-      movingStampImage.show();
-      movingStampImage.setPosition({ x: currentX, y: currentY });
-      movingStampImage.to({
-        x: currentX,
-        y: currentY + 40,
-        onFinish: () => {
-          movingStampImage?.to({
-            x: currentX,
-            y: currentY,
-            onFinish: () => {
-              movingStampImage?.remove();
-            },
-          });
-        },
-      });
-
-      drawStampMark(clientX, clientY);
-      killIfInRange(clientX, clientY);
+  const callbackFunc = (clientX: number, clientY: number) => {
+    const drawStampMark = (clientX: number, clientY: number) => {
+      const curPointerPos: Vector2d = { x: clientX, y: clientY };
+      setStampPositions(prevArray => [...prevArray, { ...curPointerPos, cropRect: cropStamp() }]);
     };
+    drawStampMark(clientX, clientY);
+    killIfInRange(clientX, clientY);
+  };
 
-    stage.on('mousedown', handleMouseDown);
-
-    // Clean up event listeners
-    return () => {
-      stage.off('mousedown', handleMouseDown);
-      container.style.cursor = 'auto';
-    };
-  }, [stageRef?.current, ants]);
+  useMove({ stageRef, layerRef, callback: callbackFunc });
 
   return (
     <Layer ref={layerRef}>
