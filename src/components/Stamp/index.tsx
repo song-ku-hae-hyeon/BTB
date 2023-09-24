@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, RefObject } from 'react';
+import { useRef, RefObject } from 'react';
 import Konva from 'konva';
 import { Layer, Image as KonvaImage } from 'react-konva';
 
