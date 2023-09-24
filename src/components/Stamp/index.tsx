@@ -23,7 +23,7 @@ const Paper = ({ stageRef }: PaperProps) => {
   const [stampPositions, setStampPositions] = useRecoilState(StampAtom);
   const layerRef = useRef<Konva.Layer>(null);
   const { ants, killIfInRange } = useAntKiller(MARK_SIZE, MARK_SIZE);
-  const offset = 20;
+  const offset = 50;
 
   const callbackFunc = (clientX: number, clientY: number, offset: number) => {
     const drawStampMark = (clientX: number, clientY: number) => {
