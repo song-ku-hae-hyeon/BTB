@@ -27,7 +27,8 @@ const Paper = ({ stageRef }: PaperProps) => {
   const callbackFunc = (clientX: number, clientY: number, offset: number) => {
     const drawCrashMark = (clientX: number, clientY: number) => {
       const curPointerPos: Vector2d = { x: clientX, y: clientY };
-      const rotation = Math.random() * 60; // 0에서 60 사이의 랜덤 각도
+      const angle = 30;
+      const rotation = -angle + Math.random() * angle; // -angle ~ angle
       setCrashPositions(prevArray => [...prevArray, { ...curPointerPos, rotation }]);
     };
     shakeBrowser(100);
