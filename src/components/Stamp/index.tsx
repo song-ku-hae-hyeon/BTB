@@ -12,8 +12,6 @@ import { useAntKiller, useMove } from '@hooks';
 const MARK_SIZE = 100;
 const stampMarkImage = new Image();
 stampMarkImage.src = IMAGE.STAMP_MARK_URL;
-const stampImage = new Image();
-stampImage.src = IMAGE.STAMP_URL;
 
 type PaperProps = {
   stageRef: RefObject<Konva.Stage> | null;

@@ -57,6 +57,7 @@ const config = {
       '@types': path.resolve(__dirname, 'src/types'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),
       '@public': path.resolve(__dirname, 'public'),
+      '@styles': path.resolve(__dirname, 'src/styles'),
     },
   },
   devServer: {
