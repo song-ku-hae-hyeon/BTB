@@ -41,6 +41,7 @@ export type useMoveParams = {
 export const useMove = (params: useMoveParams) => {
   const { stageRef, layerRef, time = 300, offset = 15, direction = 'down', callback = () => {} } = params;
   const [tool, setTool] = useRecoilState(ToolAtom);
+  const curTool = tool;
   const toolImage = new Image();
   toolImage.src = CURSOR_URL[tool];
   useEffect(() => {
@@ -83,7 +84,7 @@ export const useMove = (params: useMoveParams) => {
         ...endPosition,
         duration: time / 2000,
         onFinish: () => {
-          setTool('stamp');
+          setTool(curTool);
           movingStampImage.remove();
         },
       });
