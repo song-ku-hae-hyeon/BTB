@@ -23,17 +23,18 @@ const Paper = ({ stageRef }: PaperProps) => {
   const [stampPositions, setStampPositions] = useRecoilState(StampAtom);
   const layerRef = useRef<Konva.Layer>(null);
   const { ants, killIfInRange } = useAntKiller(MARK_SIZE, MARK_SIZE);
+  const offset = 20;
 
-  const callbackFunc = (clientX: number, clientY: number) => {
+  const callbackFunc = (clientX: number, clientY: number, offset: number) => {
     const drawStampMark = (clientX: number, clientY: number) => {
       const curPointerPos: Vector2d = { x: clientX, y: clientY };
       setStampPositions(prevArray => [...prevArray, { ...curPointerPos, cropRect: cropStamp() }]);
     };
-    drawStampMark(clientX, clientY);
-    killIfInRange(clientX, clientY);
+    drawStampMark(clientX, clientY + offset);
+    killIfInRange(clientX, clientY + offset);
   };
 
-  useMove({ stageRef, layerRef, callback: callbackFunc });
+  useMove({ stageRef, layerRef, callback: callbackFunc, offset });
 
   return (
     <Layer ref={layerRef}>

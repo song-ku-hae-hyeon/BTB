@@ -1,18 +1,10 @@
 import { useEffect, RefObject } from 'react';
 import Konva from 'konva';
-import type { ToolType } from '@types';
-import { IMAGE } from '@static';
+import { CURSOR_URL } from '@static';
 import { useRecoilState } from 'recoil';
 import { ToolAtom } from '@recoil';
 
 type Direction = 'up' | 'down' | 'left' | 'right';
-const cursorUrl: Record<ToolType, string> = {
-  none: '',
-  highlighter: IMAGE.HIGHLIGHTER_URL,
-  stamp: IMAGE.STAMP_URL,
-  ant: '',
-  bubble: '',
-};
 
 export type useMoveParams = {
   stageRef: RefObject<Konva.Stage> | null;
@@ -20,7 +12,7 @@ export type useMoveParams = {
   time?: number;
   offset?: number;
   direction?: Direction;
-  callback?: (clientX: number, clientY: number) => void;
+  callback?: (clientX: number, clientY: number, offset: number) => void;
 };
 
 /**
@@ -50,7 +42,7 @@ export const useMove = (params: useMoveParams) => {
   const { stageRef, layerRef, time = 300, offset = 15, direction = 'down', callback = () => {} } = params;
   const [tool, setTool] = useRecoilState(ToolAtom);
   const toolImage = new Image();
-  toolImage.src = cursorUrl[tool];
+  toolImage.src = CURSOR_URL[tool];
   useEffect(() => {
     const stage = stageRef?.current;
     const layer = layerRef?.current;
@@ -61,29 +53,27 @@ export const useMove = (params: useMoveParams) => {
 
       const movingStampImage = new Konva.Image({
         image: toolImage,
+        x: clientX,
+        y: clientY,
+        offsetX: toolImage.width / 2,
+        offsetY: toolImage.height / 2,
       });
       layer.add(movingStampImage);
 
-      const currentX = clientX - 32;
-      const currentY = clientY - 32;
-
-      movingStampImage.show();
-      movingStampImage.setPosition({ x: currentX, y: currentY });
-
-      let endPosition = { x: currentX, y: currentY };
+      let endPosition = { x: clientX, y: clientY };
 
       switch (direction) {
         case 'up':
-          endPosition.y = currentY - offset;
+          endPosition.y = clientY - offset;
           break;
         case 'down':
-          endPosition.y = currentY + offset;
+          endPosition.y = clientY + offset;
           break;
         case 'left':
-          endPosition.x = currentX - offset;
+          endPosition.x = clientX - offset;
           break;
         case 'right':
-          endPosition.x = currentX + offset;
+          endPosition.x = clientX + offset;
           break;
         default:
           break;
@@ -97,7 +87,7 @@ export const useMove = (params: useMoveParams) => {
           movingStampImage.remove();
         },
       });
-      callback(clientX, clientY);
+      callback(clientX, clientY, offset);
     };
 
     stage.on('mousedown', handleMouseDown);
@@ -105,5 +95,5 @@ export const useMove = (params: useMoveParams) => {
     return () => {
       stage.off('mousedown', handleMouseDown);
     };
-  }, [tool, stageRef, layerRef]);
+  }, [stageRef]);
 };
