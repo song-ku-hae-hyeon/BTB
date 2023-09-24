@@ -3,6 +3,7 @@ import type Konva from 'konva';
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { Layer } from 'react-konva';
 import { Stage } from 'konva/lib/Stage';
+import { useEraser } from '../../hooks/useEraser';
 
 const getRandomInt = (min: number, max: number) => Math.round(Math.random() * (max - min + 1)) + min;
 const getBackgroundColor = () => `rgb(${getRandomInt(0, 255)},${getRandomInt(0, 255)},${getRandomInt(0, 255)});`;
@@ -13,6 +14,7 @@ type BubbleProps = {
 
 export const Bubble = ({ stageRef }: BubbleProps) => {
   const mousePosRef = useRef<{ x: null | number; y: null | number }>({ x: null, y: null });
+  const { eraseAnts, eraseStamps } = useEraser(30, 30);
 
   const createBubble = useCallback((x: number, y: number) => {
     const range = 15;
@@ -47,6 +49,8 @@ export const Bubble = ({ stageRef }: BubbleProps) => {
       if (x === null || y === null || inActive) {
         return;
       }
+      eraseStamps(x, y);
+      eraseAnts(x, y);
       createBubble(x, y);
     };
 
@@ -62,16 +66,23 @@ export const Bubble = ({ stageRef }: BubbleProps) => {
     };
 
     let intervalId: any;
-    stageRef?.current?.on('mousedown', () => {
-      intervalId = setInterval(createBubbles, 30);
-    });
-    stageRef?.current?.on('mouseup', () => {
+    const startDraw = () => {
+      intervalId = setInterval(createBubbles, 50);
+    };
+    const stopDraw = () => {
       clearInterval(intervalId);
-    });
+    };
+    stageRef?.current?.on('mousedown', startDraw);
+    stageRef?.current?.on('mouseup', stopDraw);
 
     if (stageRef?.current === undefined) {
       removeAllBubbles();
     }
+
+    return () => {
+      stageRef?.current?.off('mousedown', startDraw);
+      stageRef?.current?.off('mouseup', stopDraw);
+    };
   }, [stageRef?.current]);
 
   useEffect(() => {
