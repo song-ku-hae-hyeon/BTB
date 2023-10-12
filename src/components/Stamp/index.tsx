@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, RefObject } from 'react';
+import { useRef, RefObject } from 'react';
 import Konva from 'konva';
 import { Layer, Image as KonvaImage } from 'react-konva';
 
@@ -7,13 +7,12 @@ import { IMAGE } from '@static';
 import { Vector2d } from 'konva/lib/types';
 import { useRecoilState } from 'recoil';
 import { StampAtom } from '@recoil';
-import { useAntKiller } from '../../hooks/useAntKiller';
+import { useAntKiller, useMove } from '@hooks';
 
-const MARK_SIZE = 100;
+const MARK_IMAGE_SIZE = 64;
+const MARK_EFFECT_SIZE = MARK_IMAGE_SIZE - 15;
 const stampMarkImage = new Image();
 stampMarkImage.src = IMAGE.STAMP_MARK_URL;
-const stampImage = new Image();
-stampImage.src = IMAGE.STAMP_URL;
 
 type PaperProps = {
   stageRef: RefObject<Konva.Stage> | null;
@@ -22,58 +21,20 @@ type PaperProps = {
 const Paper = ({ stageRef }: PaperProps) => {
   const [stampPositions, setStampPositions] = useRecoilState(StampAtom);
   const layerRef = useRef<Konva.Layer>(null);
-  const { ants, killIfInRange } = useAntKiller(MARK_SIZE, MARK_SIZE);
 
-  useEffect(() => {
-    const stage = stageRef?.current;
-    if (!stage) return;
+  const { ants, killIfInRange } = useAntKiller(MARK_EFFECT_SIZE, MARK_EFFECT_SIZE);
+  const offset = 50;
 
-    const container = stage.container();
-
-    container.style.cursor = `url(${IMAGE.STAMP_URL}) 30 56, auto`;
-
-    const handleMouseDown = ({ evt: { clientX, clientY } }: Konva.KonvaEventObject<MouseEvent>) => {
-      const drawStampMark = (clientX: number, clientY: number) => {
-        const curPointerPos: Vector2d = { x: clientX, y: clientY };
-        setStampPositions(prevArray => [...prevArray, { ...curPointerPos, cropRect: cropStamp() }]);
-      };
-
-      const currentX = clientX - 30;
-      const currentY = clientY - 90;
-
-      const movingStampImage = new Konva.Image({
-        image: stampImage,
-      });
-      layerRef.current?.add(movingStampImage);
-
-      movingStampImage.show();
-      movingStampImage.setPosition({ x: currentX, y: currentY });
-      movingStampImage.to({
-        x: currentX,
-        y: currentY + 40,
-        onFinish: () => {
-          movingStampImage?.to({
-            x: currentX,
-            y: currentY,
-            onFinish: () => {
-              movingStampImage?.remove();
-            },
-          });
-        },
-      });
-
-      drawStampMark(clientX, clientY);
-      killIfInRange(clientX, clientY);
+  const callbackFunc = (clientX: number, clientY: number, offset: number) => {
+    const drawStampMark = (clientX: number, clientY: number) => {
+      const curPointerPos: Vector2d = { x: clientX, y: clientY };
+      setStampPositions(prevArray => [...prevArray, { ...curPointerPos }]);
     };
+    drawStampMark(clientX, clientY + offset);
+    killIfInRange(clientX, clientY + offset);
+  };
 
-    stage.on('mousedown', handleMouseDown);
-
-    // Clean up event listeners
-    return () => {
-      stage.off('mousedown', handleMouseDown);
-      container.style.cursor = 'auto';
-    };
-  }, [stageRef?.current, ants]);
+  useMove({ stageRef, layerRef, callback: callbackFunc, offset });
 
   return (
     <Layer ref={layerRef}>
@@ -81,29 +42,15 @@ const Paper = ({ stageRef }: PaperProps) => {
         <KonvaImage
           key={`${index}-key`}
           image={stampMarkImage}
-          x={position.x - MARK_SIZE / 2}
-          y={position.y + 10 - MARK_SIZE / 2}
-          width={MARK_SIZE}
-          height={MARK_SIZE}
-          crop={position.cropRect}
+          x={position.x - MARK_IMAGE_SIZE / 2}
+          y={position.y + 10 - MARK_IMAGE_SIZE / 2}
+          width={MARK_IMAGE_SIZE}
+          height={MARK_IMAGE_SIZE}
+          zIndex={10}
         />
       ))}
     </Layer>
   );
-};
-
-const cropStamp = () => {
-  const width = 566;
-  const height = 393;
-  const widthCount = 3;
-  const heightCount = 2;
-
-  return {
-    x: (width / widthCount) * Math.floor(Math.random() * widthCount),
-    y: (height / heightCount) * Math.floor(Math.random() * heightCount),
-    width: width / widthCount,
-    height: height / heightCount,
-  };
 };
 
 export default Paper;

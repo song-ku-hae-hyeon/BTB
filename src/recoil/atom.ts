@@ -1,31 +1,37 @@
 import { atom } from 'recoil';
-import { IRect, Vector2d } from 'konva/lib/types';
 
-export interface HighlighterLineData {
-  points: number[];
-}
+import type { ToolType } from '@types';
+import type { ShakeProps, HighlighterLineData, Stamp, AntData, Crash } from './types';
 
 export const HighlighterAtom = atom<HighlighterLineData[]>({
   key: 'highlightAtom',
   default: [],
 });
 
-export type Stamp = Vector2d & { cropRect: IRect };
-
 export const StampAtom = atom<Stamp[]>({
   key: 'stampAtom',
   default: [],
 });
 
-export interface AntData {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  dead?: boolean;
-}
-
 export const AntAtom = atom<AntData[]>({
   key: 'antAtom',
+  default: [],
+});
+
+export const ToolAtom = atom<ToolType>({
+  key: 'toolAtom',
+  default: 'none',
+});
+
+export const ShakeAtom = atom<ShakeProps>({
+  key: 'shakeAtom',
+  default: {
+    shouldShake: false,
+    duration: 500,
+  },
+});
+
+export const CrashAtom = atom<Crash[]>({
+  key: 'crashAtom',
   default: [],
 });

@@ -1,14 +1,17 @@
 import styled from 'styled-components';
 import { IMAGE } from '@static';
 
+import type { ToolType } from '@types';
 import type { ButtonProps } from './types';
 
-const iconImage: Record<string, string> = {
+const iconImage: Record<ToolType, string> = {
+  none: `none`,
   highlighter: `url(${IMAGE.HIGHLIGHTER_URL})`,
   stamp: `url(${IMAGE.STAMP_URL})`,
   ant: `url(${IMAGE.ANT1_URL})`,
   bubble: 'none',
   gun: `url(${IMAGE.ANT1_URL})`,
+  hammer: `url(${IMAGE.HAMMER_URL})`,
 };
 
 const ButtonWrapper = styled.button<Pick<ButtonProps, 'icon'>>`
