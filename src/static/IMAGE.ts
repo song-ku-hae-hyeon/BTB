@@ -1,7 +1,7 @@
 // @ts-nocheck
 import highlighter from '@public/highlighter_64.png';
 import stamp from '@public/stamp_64.png';
-import stamp_mark from '@public/stamp_mark.png';
+import stamp_mark from '@public/stamp_mark_64.png';
 import ant1 from '@public/ant1_64.png';
 import ant2 from '@public/ant2_64.png';
 import ant_dead from '@public/ant_dead_64.png';
@@ -24,14 +24,6 @@ export const CURSOR_URL: Record<ToolType, string> = {
   ant: '',
   bubble: '',
   hammer: HAMMER_URL,
-};
-
-export const CURSOR_URL: Record<ToolType, string> = {
-  none: '',
-  highlighter: HIGHLIGHTER_URL,
-  stamp: STAMP_URL,
-  ant: '',
-  bubble: '',
 };
 
 export default {

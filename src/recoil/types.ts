@@ -4,7 +4,7 @@ export interface HighlighterLineData {
   points: number[];
 }
 
-export type Stamp = Vector2d & { cropRect: IRect };
+export type Stamp = Vector2d;
 
 export interface AntData {
   x: number;

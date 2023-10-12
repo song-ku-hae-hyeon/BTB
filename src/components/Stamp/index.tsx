@@ -9,7 +9,8 @@ import { useRecoilState } from 'recoil';
 import { StampAtom } from '@recoil';
 import { useAntKiller, useMove } from '@hooks';
 
-const MARK_SIZE = 100;
+const MARK_IMAGE_SIZE = 64;
+const MARK_EFFECT_SIZE = MARK_IMAGE_SIZE - 15;
 const stampMarkImage = new Image();
 stampMarkImage.src = IMAGE.STAMP_MARK_URL;
 
@@ -20,13 +21,14 @@ type PaperProps = {
 const Paper = ({ stageRef }: PaperProps) => {
   const [stampPositions, setStampPositions] = useRecoilState(StampAtom);
   const layerRef = useRef<Konva.Layer>(null);
-  const { ants, killIfInRange } = useAntKiller(MARK_SIZE, MARK_SIZE);
+
+  const { ants, killIfInRange } = useAntKiller(MARK_EFFECT_SIZE, MARK_EFFECT_SIZE);
   const offset = 50;
 
   const callbackFunc = (clientX: number, clientY: number, offset: number) => {
     const drawStampMark = (clientX: number, clientY: number) => {
       const curPointerPos: Vector2d = { x: clientX, y: clientY };
-      setStampPositions(prevArray => [...prevArray, { ...curPointerPos, cropRect: cropStamp() }]);
+      setStampPositions(prevArray => [...prevArray, { ...curPointerPos }]);
     };
     drawStampMark(clientX, clientY + offset);
     killIfInRange(clientX, clientY + offset);
@@ -40,29 +42,15 @@ const Paper = ({ stageRef }: PaperProps) => {
         <KonvaImage
           key={`${index}-key`}
           image={stampMarkImage}
-          x={position.x - MARK_SIZE / 2}
-          y={position.y + 10 - MARK_SIZE / 2}
-          width={MARK_SIZE}
-          height={MARK_SIZE}
-          crop={position.cropRect}
+          x={position.x - MARK_IMAGE_SIZE / 2}
+          y={position.y + 10 - MARK_IMAGE_SIZE / 2}
+          width={MARK_IMAGE_SIZE}
+          height={MARK_IMAGE_SIZE}
+          zIndex={10}
         />
       ))}
     </Layer>
   );
-};
-
-const cropStamp = () => {
-  const width = 566;
-  const height = 393;
-  const widthCount = 3;
-  const heightCount = 2;
-
-  return {
-    x: (width / widthCount) * Math.floor(Math.random() * widthCount),
-    y: (height / heightCount) * Math.floor(Math.random() * heightCount),
-    width: width / widthCount,
-    height: height / heightCount,
-  };
 };
 
 export default Paper;
