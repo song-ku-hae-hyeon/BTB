@@ -1,1 +1,1 @@
-export type ToolType = 'highlighter' | 'stamp' | 'ant' | 'bubble';
+export type ToolType = 'none' | 'highlighter' | 'stamp' | 'ant' | 'bubble' | 'hammer';

@@ -1,1 +1,1 @@
-export { default as IMAGE } from './IMAGE';
+export { default as IMAGE, CURSOR_URL } from './IMAGE';

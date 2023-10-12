@@ -1,15 +1,11 @@
+import { useRecoilState, useRecoilValue } from 'recoil';
 import S from './ContentWrapper.styled';
+import { ToolAtom } from '@recoil';
 
-import type { ReactNode } from 'react';
-import type { ToolType } from '@types';
+import type { ContentWrapperProps } from './types';
 
-export interface ContentWrapperProps {
-  isActive: boolean;
-  children: ReactNode;
-  tool: ToolType;
-}
-
-const ContentWrapper = ({ isActive, children, tool }: ContentWrapperProps) => {
+const ContentWrapper = ({ isActive, children }: ContentWrapperProps) => {
+  const tool = useRecoilValue(ToolAtom);
   return (
     <S.ContentWrapper isActive={isActive} tool={tool}>
       {children}
