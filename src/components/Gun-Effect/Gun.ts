@@ -204,18 +204,6 @@ export class Gun {
     this.createBullet();
   }
 
-  private barrelHelper() {
-    this.ctx.save();
-    this.ctx.translate(this.gunPos.x, this.gunPos.y);
-    this.ctx.rotate((this.movingRotation * Math.PI) / 180);
-
-    this.ctx.beginPath();
-    this.ctx.fillStyle = '#5DDE88';
-    this.ctx.arc(this.barrelCoordinate.x, this.barrelCoordinate.y, 10, 0, 2 * Math.PI);
-    this.ctx.fill();
-    this.ctx.restore();
-  }
-
   private createBullet() {
     this.bullets.push({
       weaponPos: {
@@ -240,8 +228,6 @@ export class Gun {
       this.ctx.translate(this.gunPos.x + this.recoil, this.gunPos.y);
       this.ctx.rotate(((e.rotation + e.randomRot) * Math.PI) / 180);
       this.ctx.beginPath();
-      // this.#ctx.fillStyle = 'yellow'
-      // this.#ctx.arc(e.barrelPos.x + e.x, e.barrelPos.y + e.y, 4, 0, 2 * Math.PI)
       this.ctx.shadowColor = 'yellow';
       this.ctx.shadowBlur = 20;
       this.ctx.shadowOffsetX = 0;
@@ -293,6 +279,7 @@ export class Gun {
     if (this.elapsed > this.interval) {
       this.then = this.now - (this.elapsed % this.interval);
       this.ctx.clearRect(0, 0, this.width, this.height);
+
       this.calculateDist();
       this.createGun();
       this.createCircle();

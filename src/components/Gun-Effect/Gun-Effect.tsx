@@ -10,32 +10,30 @@ type GunEffectProps = {
 
 export const GunEffect = ({ stageRef }: GunEffectProps) => {
   const layerRef = useRef<any>(null);
-  console.log('hello world');
-  useEffect(() => {
-    const stage = stageRef?.current;
 
-    if (stage) {
-      const layerCanvas = layerRef.current?.getCanvas();
-      if (layerCanvas) {
-        // Settings
-        const ctx = layerCanvas?.getContext('2d');
-        if (ctx) {
-          ctx.imageSmoothingEnabled = false;
-          // Gun Props
-          const properties = {
-            ctx: ctx,
-            width: window.innerWidth,
-            height: window.innerHeight,
-            image: 'https://images2.imgbox.com/c2/91/ibBtxOym_o.png',
-            weight: 3.4,
-            rateOfFire: 300,
-            recoil: 40,
-            barrelCoordinate: {
-              x: 50,
-              y: -20,
-            },
-          };
-          const gun = new Gun(properties);
+  useEffect(() => {
+    const layerCanvas = layerRef.current?.getCanvas();
+    if (layerCanvas) {
+      // Settings
+      const ctx = layerCanvas?.getContext('2d');
+      if (ctx) {
+        ctx.imageSmoothingEnabled = false;
+        // Gun Props
+        const properties = {
+          ctx: ctx,
+          width: window.innerWidth,
+          height: window.innerHeight,
+          image: 'https://images2.imgbox.com/c2/91/ibBtxOym_o.png',
+          weight: 3.4,
+          rateOfFire: 300,
+          recoil: 40,
+          barrelCoordinate: {
+            x: 50,
+            y: -20,
+          },
+        };
+        const gun = new Gun(properties);
+        if (stageRef?.current) {
           gun.animate();
         }
       }
