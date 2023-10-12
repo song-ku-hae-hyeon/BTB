@@ -26,14 +26,6 @@ export const CURSOR_URL: Record<ToolType, string> = {
   hammer: HAMMER_URL,
 };
 
-export const CURSOR_URL: Record<ToolType, string> = {
-  none: '',
-  highlighter: HIGHLIGHTER_URL,
-  stamp: STAMP_URL,
-  ant: '',
-  bubble: '',
-};
-
 export default {
   HIGHLIGHTER_URL,
   STAMP_URL,

@@ -28,7 +28,7 @@ const Paper = ({ stageRef }: PaperProps) => {
   const callbackFunc = (clientX: number, clientY: number, offset: number) => {
     const drawStampMark = (clientX: number, clientY: number) => {
       const curPointerPos: Vector2d = { x: clientX, y: clientY };
-      setStampPositions(prevArray => [...prevArray, { ...curPointerPos, cropRect: cropStamp() }]);
+      setStampPositions(prevArray => [...prevArray, { ...curPointerPos }]);
     };
     drawStampMark(clientX, clientY + offset);
     killIfInRange(clientX, clientY + offset);
