@@ -18,7 +18,7 @@ export const useAntKiller = (dx: number, dy: number) => {
   const updateAntDeadState = (ant: AntData, x: number, y: number) =>
     shouldKill(ant, x, y) ? { ...ant, dead: true } : { ...ant };
   const killIfInRange = (x: number, y: number) => {
-    setAnts(ants.map(ant => updateAntDeadState(ant, x, y)));
+    setAnts(prevAnts => prevAnts.map(ant => updateAntDeadState(ant, x, y)));
   };
 
   useEffect(() => {
