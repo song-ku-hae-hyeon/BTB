@@ -8,6 +8,7 @@ const iconImage: Record<string, string> = {
   stamp: `url(${IMAGE.STAMP_URL})`,
   ant: `url(${IMAGE.ANT1_URL})`,
   bubble: 'none',
+  gun: `url(${IMAGE.ANT1_URL})`,
 };
 
 const ButtonWrapper = styled.button<Pick<ButtonProps, 'icon'>>`

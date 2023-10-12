@@ -9,6 +9,7 @@ const cursorImage: Record<ToolType, string> = {
   stamp: `url(${IMAGE.STAMP_URL}) 32 64 ,auto;`,
   ant: `default`,
   bubble: `default`,
+  gun: `default`,
 };
 
 const ContentWrapper = styled.div<ContentWrapperProps>`
