@@ -47,7 +47,7 @@ const Workbench = ({ tool }: { tool: ToolType }) => {
         <Stamp stageRef={tool === 'stamp' ? stageRef : null} />
         <AntGroup stageRef={tool === 'ant' ? stageRef : null} />
         <Bubble stageRef={tool === 'bubble' ? stageRef : null} />
-        <GunEffect stageRef={tool === 'gun' ? stageRef : null} />
+        {/* <GunEffect stageRef={tool === 'gun' ? stageRef : null} /> */}
         <Hammer stageRef={tool === 'hammer' ? stageRef : null} />
       </Stage>
     </div>
