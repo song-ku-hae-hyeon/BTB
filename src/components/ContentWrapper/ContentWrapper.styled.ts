@@ -11,6 +11,7 @@ const cursorImage: Record<ToolType, string> = {
   stamp: `url(${IMAGE.STAMP_URL}) 32 32 ,auto;`,
   ant: `default`,
   bubble: `default`,
+  hammer: `url(${IMAGE.HAMMER_URL}) 32 32 ,auto;`,
 };
 
 const ContentWrapper = styled.div<ContentWrapperStyledProps>`

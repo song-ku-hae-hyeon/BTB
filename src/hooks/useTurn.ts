@@ -22,6 +22,7 @@ export type useTurnParams = {
 export const useTurn = (params: useTurnParams) => {
   const { stageRef, layerRef, offset = 60, direction = 'left', time = 300, callback = () => {} } = params;
   const [tool, setTool] = useRecoilState(ToolAtom);
+  const curTool = tool;
   const toolImage = new Image();
   toolImage.src = CURSOR_URL[tool];
 
@@ -52,7 +53,7 @@ export const useTurn = (params: useTurnParams) => {
         rotation: rotationOffset,
         duration: time / 2000, // duration을 초 단위로 변환
         onFinish: () => {
-          setTool('stamp');
+          setTool(curTool);
           rotatingImage.remove();
         },
       });

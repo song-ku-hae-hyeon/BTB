@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 
 import type { ToolType } from '@types';
-import type { ShakeProps, HighlighterLineData, Stamp, AntData } from './types';
+import type { ShakeProps, HighlighterLineData, Stamp, AntData, Crash } from './types';
 
 export const HighlighterAtom = atom<HighlighterLineData[]>({
   key: 'highlightAtom',
@@ -29,4 +29,9 @@ export const ShakeAtom = atom<ShakeProps>({
     shouldShake: false,
     duration: 500,
   },
+});
+
+export const CrashAtom = atom<Crash[]>({
+  key: 'crashAtom',
+  default: [],
 });
