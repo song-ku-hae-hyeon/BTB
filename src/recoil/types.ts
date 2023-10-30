@@ -20,3 +20,5 @@ export interface ShakeProps {
 }
 
 export type Crash = Vector2d & { rotation: number };
+
+export type BulletMark = Vector2d & { rotation: number };
