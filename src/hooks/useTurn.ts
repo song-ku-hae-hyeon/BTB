@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { ToolAtom } from '@recoil';
 import { CURSOR_URL } from '@static';
 
-type Direction = 'left' | 'right';
+type Direction = 'CLOCK_WISE' | 'COUNTER_CLOCK_WISE';
 
 export type useTurnParams = {
   stageRef: RefObject<Konva.Stage> | null;
@@ -20,7 +20,7 @@ export type useTurnParams = {
  * @description - 클릭시 커서 이미지에 원하는 각도와 방향으로 회전합니다.
  */
 export const useTurn = (params: useTurnParams) => {
-  const { stageRef, layerRef, offset = 60, direction = 'left', time = 300, callback = () => {} } = params;
+  const { stageRef, layerRef, offset = 60, direction = 'CLOCK_WISE', time = 300, callback = () => {} } = params;
   const [tool, setTool] = useRecoilState(ToolAtom);
   const curTool = tool;
   const toolImage = new Image();
@@ -47,7 +47,7 @@ export const useTurn = (params: useTurnParams) => {
       rotatingImage.show();
       rotatingImage.setPosition({ x: clientX, y: clientY });
 
-      const rotationOffset = direction === 'right' ? offset : -offset;
+      const rotationOffset = direction === 'COUNTER_CLOCK_WISE' ? offset : -offset;
 
       rotatingImage.to({
         rotation: rotationOffset,
