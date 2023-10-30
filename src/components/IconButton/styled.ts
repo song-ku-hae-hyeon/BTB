@@ -10,7 +10,7 @@ const iconImage: Record<ToolType, string> = {
   stamp: `url(${IMAGE.STAMP_URL})`,
   ant: `url(${IMAGE.ANT1_URL})`,
   bubble: 'none',
-  gun: `url(${IMAGE.ANT1_URL})`,
+  gun: `url(${IMAGE.GUN_URL})`,
   hammer: `url(${IMAGE.HAMMER_URL})`,
 };
 

@@ -11,7 +11,7 @@ const cursorImage: Record<ToolType, string> = {
   stamp: `url(${IMAGE.STAMP_URL}) 32 32 ,auto;`,
   ant: `default`,
   bubble: `default`,
-  gun: `default`,
+  gun: `url(${IMAGE.GUN_URL}) 32 32 ,auto;`,
   hammer: `url(${IMAGE.HAMMER_URL}) 32 32 ,auto;`,
 };
 
