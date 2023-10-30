@@ -4,7 +4,7 @@ import { ContentWrapper, DockBar, Highlighter, Stamp, AntGroup, Hammer } from '@
 import { ToolType } from '@types';
 import { Bubble } from './components/Bubble';
 import type Konva from 'konva';
-import { GunEffect } from './components/Gun-Effect';
+import { BulletEffect } from './components/Bullet-Effect';
 import { ToolAtom } from '@recoil';
 import { GlobalStyles } from '@styles';
 import { Stage } from 'react-konva';
@@ -47,7 +47,7 @@ const Workbench = ({ tool }: { tool: ToolType }) => {
         <Stamp stageRef={tool === 'stamp' ? stageRef : null} />
         <AntGroup stageRef={tool === 'ant' ? stageRef : null} />
         <Bubble stageRef={tool === 'bubble' ? stageRef : null} />
-        {/* <GunEffect stageRef={tool === 'gun' ? stageRef : null} /> */}
+        <BulletEffect stageRef={tool === 'gun' ? stageRef : null} />
         <Hammer stageRef={tool === 'hammer' ? stageRef : null} />
       </Stage>
     </div>
