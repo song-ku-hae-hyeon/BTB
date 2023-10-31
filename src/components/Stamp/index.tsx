@@ -28,7 +28,9 @@ const Paper = ({ stageRef }: PaperProps) => {
   const callbackFunc = (clientX: number, clientY: number, offset: number) => {
     const drawStampMark = (clientX: number, clientY: number) => {
       const curPointerPos: Vector2d = { x: clientX, y: clientY };
-      setStampPositions(prevArray => [...prevArray, { ...curPointerPos }]);
+      const angle = 45;
+      const rotation = -angle + Math.random() * (angle * 2);
+      setStampPositions(prevArray => [...prevArray, { ...curPointerPos, rotation }]);
     };
     drawStampMark(clientX, clientY + offset);
     killIfInRange(clientX, clientY + offset);
@@ -47,6 +49,7 @@ const Paper = ({ stageRef }: PaperProps) => {
           width={MARK_IMAGE_SIZE}
           height={MARK_IMAGE_SIZE}
           zIndex={10}
+          rotation={position.rotation}
         />
       ))}
     </Layer>
