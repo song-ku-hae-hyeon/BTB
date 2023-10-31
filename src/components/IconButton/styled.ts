@@ -9,7 +9,7 @@ const iconImage: Record<ToolType, string> = {
   default: `default`,
   highlighter: `url(${IMAGE.HIGHLIGHTER_URL})`,
   stamp: `url(${IMAGE.STAMP_URL})`,
-  ant: `url(${IMAGE.ANT1_URL})`,
+  ant: `url(${IMAGE.ANT_URL})`,
   bubble: 'none',
   gun: `url(${IMAGE.GUN_URL})`,
   hammer: `url(${IMAGE.HAMMER_URL})`,

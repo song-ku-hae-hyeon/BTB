@@ -28,7 +28,7 @@ const Paper = ({ stageRef }: PaperProps) => {
     const drawCrashMark = (clientX: number, clientY: number) => {
       const curPointerPos: Vector2d = { x: clientX, y: clientY };
       const angle = 30;
-      const rotation = -angle + Math.random() * angle; // -angle ~ angle
+      const rotation = -angle + Math.random() * (angle * 2); // -angle ~ angle
       setCrashPositions(prevArray => [...prevArray, { ...curPointerPos, rotation }]);
     };
     shakeBrowser(100);
