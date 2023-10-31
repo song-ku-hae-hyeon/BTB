@@ -1,10 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import { useRecoilState } from 'recoil';
-import { ContentWrapper, DockBar, Highlighter, Stamp, AntGroup, Hammer } from '@components';
+import { ContentWrapper, DockBar, Highlighter, Stamp, AntGroup, Hammer, BulletEffect, Bubble } from '@components';
 import { ToolType } from '@types';
-import { Bubble } from './components/Bubble';
 import type Konva from 'konva';
-import { BulletEffect } from './components/Bullet-Effect';
 import { ToolAtom } from '@recoil';
 import { GlobalStyles } from '@styles';
 import { Stage } from 'react-konva';
