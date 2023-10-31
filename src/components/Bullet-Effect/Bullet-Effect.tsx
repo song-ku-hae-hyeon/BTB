@@ -1,6 +1,6 @@
 import { type RefObject, useRef } from 'react';
 import { Layer, Image as KonvaImage } from 'react-konva';
-import { useTurn, useAntKiller } from '@hooks';
+import { useTurn, useAntKiller, useShake } from '@hooks';
 import { useRecoilState } from 'recoil';
 import { IMAGE } from '@static';
 
@@ -20,17 +20,19 @@ export const BulletEffect = ({ stageRef }: GunEffectProps) => {
   const [bulletPositions, setBulletPositions] = useRecoilState(Bullet);
   const layerRef = useRef<Konva.Layer>(null);
   const { killIfInRange } = useAntKiller(MARK_SIZE, MARK_SIZE);
+  const { shakeBrowser } = useShake();
   const offset = 35;
   const mouseDownHandler = (clientX: number, clientY: number, offset: number) => {
     const compensatedX = clientX - offset * 3;
     const compensatedY = clientY - offset * 2;
-    const drawCrashMark = (x: number, y: number) => {
+    const drawBulletMark = (x: number, y: number) => {
       const curPointerPos: Vector2d = { x, y };
       const angle = 30;
       const rotation = -angle + Math.random() * angle; // -angle ~ angle
       setBulletPositions(prevArray => [...prevArray, { ...curPointerPos, rotation }]);
     };
-    drawCrashMark(compensatedX, compensatedY);
+    shakeBrowser(25);
+    drawBulletMark(compensatedX, compensatedY);
     killIfInRange(compensatedX, compensatedY);
   };
 
