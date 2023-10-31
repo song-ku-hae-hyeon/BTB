@@ -7,6 +7,8 @@ import ant from '@public/ant_64.png';
 import ant_dead from '@public/ant_dead_64.png';
 import hammer from '@public/hammer_64.png';
 import crash from '@public/crash_64.png';
+import gun from '@public/gun_64.png';
+import gun_mark from '@public/gun_mark_64.png';
 
 const HIGHLIGHTER_URL = highlighter as string;
 const STAMP_URL = stamp as string;
@@ -16,6 +18,8 @@ const ANT_URL = ant as string;
 const DEAD_ANT_URL = ant_dead as string;
 const HAMMER_URL = hammer as string;
 const CRASH_URL = crash as string;
+const GUN_URL = gun as string;
+const GUN_MARK_URL = gun_mark as string;
 
 export const CURSOR_URL: Record<ToolType, string> = {
   none: '',
@@ -24,6 +28,7 @@ export const CURSOR_URL: Record<ToolType, string> = {
   ant: '',
   bubble: '',
   hammer: HAMMER_URL,
+  gun: GUN_URL,
 };
 
 export default {
@@ -33,6 +38,8 @@ export default {
   ANT_URL,
   ANT_SPRITE_URL,
   DEAD_ANT_URL,
+  GUN_URL,
   HAMMER_URL,
   CRASH_URL,
+  GUN_MARK_URL,
 };
