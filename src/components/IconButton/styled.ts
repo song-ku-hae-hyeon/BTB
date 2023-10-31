@@ -6,6 +6,7 @@ import type { ButtonProps } from './types';
 
 const iconImage: Record<ToolType, string> = {
   none: `none`,
+  default: `default`,
   highlighter: `url(${IMAGE.HIGHLIGHTER_URL})`,
   stamp: `url(${IMAGE.STAMP_URL})`,
   ant: `url(${IMAGE.ANT1_URL})`,

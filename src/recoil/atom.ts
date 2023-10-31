@@ -20,7 +20,7 @@ export const AntAtom = atom<AntData[]>({
 
 export const ToolAtom = atom<ToolType>({
   key: 'toolAtom',
-  default: 'none',
+  default: 'default',
 });
 
 export const ShakeAtom = atom<ShakeProps>({
