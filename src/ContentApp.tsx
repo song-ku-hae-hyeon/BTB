@@ -43,10 +43,10 @@ const Workbench = ({ tool }: { tool: ToolType }) => {
       <Stage width={window.innerWidth} height={window.innerHeight} ref={stageRef}>
         <Highlighter stageRef={tool === 'highlighter' ? stageRef : null} />
         <Stamp stageRef={tool === 'stamp' ? stageRef : null} />
-        <AntGroup stageRef={tool === 'ant' ? stageRef : null} />
         <Bubble stageRef={tool === 'bubble' ? stageRef : null} />
         <BulletEffect stageRef={tool === 'gun' ? stageRef : null} />
         <Hammer stageRef={tool === 'hammer' ? stageRef : null} />
+        <AntGroup stageRef={tool === 'ant' ? stageRef : null} />
       </Stage>
     </div>
   );
