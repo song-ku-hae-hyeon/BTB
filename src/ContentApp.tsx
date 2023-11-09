@@ -47,8 +47,8 @@ const Workbench = ({ tool }: { tool: ToolType }) => {
           color="rgba(255, 255, 0, 0.5)"
           strokeWidth={20}
         />
-        <Pen stageRef={tool === 'bluePen' ? stageRef : null} atom={BluePenAtom} color="#5166B3" strokeWidth={5} />
         <Pen stageRef={tool === 'redPen' ? stageRef : null} atom={RedPenAtom} color="#F76D67" strokeWidth={5} />
+        <Pen stageRef={tool === 'bluePen' ? stageRef : null} atom={BluePenAtom} color="#5166B3" strokeWidth={5} />
         <Stamp stageRef={tool === 'stamp' ? stageRef : null} />
         <Bubble stageRef={tool === 'bubble' ? stageRef : null} />
         <BulletEffect stageRef={tool === 'gun' ? stageRef : null} />
