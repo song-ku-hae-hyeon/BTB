@@ -1,8 +1,9 @@
-import { type RefObject, useRef, useCallback } from 'react';
+import { type RefObject, useRef, useCallback, useState } from 'react';
 import { Layer, Image as KonvaImage } from 'react-konva';
 import { useTurn, useAntKiller, useShake } from '@hooks';
 import { useRecoilState } from 'recoil';
 import { IMAGE } from '@static';
+import styled, { keyframes } from 'styled-components';
 
 import type Konva from 'konva';
 import { Vector2d } from 'konva/lib/types';
@@ -25,8 +26,36 @@ const useBullet = () => {
     const rotation = -angle + Math.random() * angle; // -angle ~ angle
     setBulletPositions(prevArray => [...prevArray, { ...curPointerPos, rotation }]);
   }, []);
-  const drawBulletShell = useCallback(() => {
-    console.log('drawBulletShell');
+  const drawBulletShell = useCallback((x: number, y: number) => {
+    const container = document.createElement('div');
+    applyElementStyle(container, {
+      position: 'absolute',
+      background: 'transparent',
+      left: `${x - 20}px`,
+      bottom: '0px',
+      top: `${y + 15}px`,
+      width: `300px`,
+    });
+
+    const bullet = document.createElement('div');
+    applyElementStyle(bullet, {
+      width: '15px',
+      height: '15px',
+      background: 'red',
+      animation: `1500ms fallAnimation cubic-bezier(0.0, 0.1, 0.0, 0.1) forwards`,
+      anmationIterationCount: 1,
+    });
+
+    container.appendChild(bullet);
+    document.body.appendChild(container);
+    setTimeout(() => document.body.removeChild(container), 1700);
+
+    function applyElementStyle(element: HTMLDivElement, styleInfo: {}) {
+      const style = Object.entries(styleInfo)
+        .map(([key, value]) => `${key}:${value};`)
+        .join('');
+      element.setAttribute('style', style);
+    }
   }, []);
 
   return { bulletPositions, drawBulletMark, drawBulletShell };
@@ -43,7 +72,7 @@ export const BulletEffect = ({ stageRef }: GunEffectProps) => {
     const compensatedY = clientY - offset * 2;
     shakeBrowser(25);
     drawBulletMark(compensatedX, compensatedY);
-    drawBulletShell();
+    drawBulletShell(clientX, clientY);
     killIfInRange(compensatedX, compensatedY);
   };
 
