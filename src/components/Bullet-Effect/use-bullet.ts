@@ -48,7 +48,7 @@ export const useBullet = () => {
     const animationDuration = 1700;
     const bulletShellElement = createBulletShellElement(x, y, animationDuration);
     document.body.appendChild(bulletShellElement);
-    // setTimeout(() => document.body.removeChild(bulletShellElement), animationDuration);
+    setTimeout(() => document.body.removeChild(bulletShellElement), animationDuration);
   }, []);
 
   return { bulletPositions, drawBulletMark, drawBulletShell };
