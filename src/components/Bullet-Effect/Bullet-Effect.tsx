@@ -25,21 +25,25 @@ const useBullet = () => {
     const rotation = -angle + Math.random() * angle; // -angle ~ angle
     setBulletPositions(prevArray => [...prevArray, { ...curPointerPos, rotation }]);
   }, []);
+  const drawBulletShell = useCallback(() => {
+    console.log('drawBulletShell');
+  }, []);
 
-  return { bulletPositions, drawBulletMark };
+  return { bulletPositions, drawBulletMark, drawBulletShell };
 };
 
 export const BulletEffect = ({ stageRef }: GunEffectProps) => {
   const layerRef = useRef<Konva.Layer>(null);
   const { killIfInRange } = useAntKiller(MARK_SIZE, MARK_SIZE);
   const { shakeBrowser } = useShake();
-  const { bulletPositions, drawBulletMark } = useBullet();
+  const { bulletPositions, drawBulletMark, drawBulletShell } = useBullet();
 
   const onMouseDown = (clientX: number, clientY: number, offset: number) => {
     const compensatedX = clientX - offset * 3;
     const compensatedY = clientY - offset * 2;
     shakeBrowser(25);
     drawBulletMark(compensatedX, compensatedY);
+    drawBulletShell();
     killIfInRange(compensatedX, compensatedY);
   };
 
