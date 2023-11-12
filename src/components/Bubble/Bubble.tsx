@@ -17,7 +17,7 @@ type BubbleProps = {
 
 export const Bubble = ({ stageRef }: BubbleProps) => {
   const mousePosRef = useRef<{ x: null | number; y: null | number }>({ x: null, y: null });
-  const { eraseAnts, eraseStamps, eraseCrash } = useEraser(30, 30);
+  const { eraseAnts, eraseStamps, eraseCrash, eraseBulletEffect } = useEraser(30, 30);
 
   const createBubble = useCallback((x: number, y: number) => {
     const range = 15;
@@ -55,6 +55,7 @@ export const Bubble = ({ stageRef }: BubbleProps) => {
       eraseStamps(x, y);
       eraseAnts(x, y);
       eraseCrash(x, y);
+      eraseBulletEffect(x, y);
       createBubble(x, y);
     };
 

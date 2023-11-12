@@ -1,11 +1,11 @@
 import { useRecoilState } from 'recoil';
-import { useAntKiller } from './useAntKiller';
-import { AntAtom, AntData, Crash, CrashAtom, Stamp, StampAtom } from '@recoil';
+import { AntAtom, AntData, Bullet, BulletMark, Crash, CrashAtom, Stamp, StampAtom } from '@recoil';
 
 export const useEraser = (dx: number, dy: number) => {
   const [_, setAnts] = useRecoilState(AntAtom);
   const [__, setStamps] = useRecoilState(StampAtom);
   const [___, setCrash] = useRecoilState(CrashAtom);
+  const [____, setBulletEffect] = useRecoilState(Bullet);
 
   const eraseAnts = (x: number, y: number) => {
     const inEraserRange = (ant: AntData) => Math.abs(ant.x - x) < dx && Math.abs(ant.y - y) < dy;
@@ -22,5 +22,10 @@ export const useEraser = (dx: number, dy: number) => {
     setCrash(crashes => crashes.filter(crash => !inEraserRange(crash)));
   };
 
-  return { eraseAnts, eraseStamps, eraseCrash };
+  const eraseBulletEffect = (x: number, y: number) => {
+    const inEraserRange = (bullet: BulletMark) => Math.abs(bullet.x - x) < dx && Math.abs(bullet.y - y) < dy;
+    setBulletEffect(bullets => bullets.filter(bullet => !inEraserRange(bullet)));
+  };
+
+  return { eraseAnts, eraseStamps, eraseCrash, eraseBulletEffect };
 };
