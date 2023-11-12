@@ -1,10 +1,11 @@
 import { useRecoilState } from 'recoil';
 import { useAntKiller } from './useAntKiller';
-import { AntAtom, AntData, Stamp, StampAtom } from '@recoil';
+import { AntAtom, AntData, Crash, CrashAtom, Stamp, StampAtom } from '@recoil';
 
 export const useEraser = (dx: number, dy: number) => {
   const [_, setAnts] = useRecoilState(AntAtom);
   const [__, setStamps] = useRecoilState(StampAtom);
+  const [___, setCrash] = useRecoilState(CrashAtom);
 
   const eraseAnts = (x: number, y: number) => {
     const inEraserRange = (ant: AntData) => Math.abs(ant.x - x) < dx && Math.abs(ant.y - y) < dy;
@@ -16,5 +17,10 @@ export const useEraser = (dx: number, dy: number) => {
     setStamps(stamps => stamps.filter(stamp => !inEraserRange(stamp)));
   };
 
-  return { eraseAnts, eraseStamps };
+  const eraseCrash = (x: number, y: number) => {
+    const inEraserRange = (crash: Crash) => Math.abs(crash.x - x) < dx && Math.abs(crash.y - y) < dy;
+    setCrash(crashes => crashes.filter(crash => !inEraserRange(crash)));
+  };
+
+  return { eraseAnts, eraseStamps, eraseCrash };
 };
