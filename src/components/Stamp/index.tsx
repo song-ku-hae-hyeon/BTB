@@ -44,11 +44,13 @@ const Paper = ({ stageRef }: PaperProps) => {
         <KonvaImage
           key={`${index}-key`}
           image={stampMarkImage}
-          x={position.x - MARK_IMAGE_SIZE / 2}
-          y={position.y + 10 - MARK_IMAGE_SIZE / 2}
+          x={position.x}
+          y={position.y + 10}
           width={MARK_IMAGE_SIZE}
           height={MARK_IMAGE_SIZE}
           zIndex={10}
+          offsetX={MARK_IMAGE_SIZE / 2}
+          offsetY={MARK_IMAGE_SIZE / 2}
           rotation={position.rotation}
         />
       ))}
