@@ -6,6 +6,7 @@ import {
   BulletMark,
   Crash,
   CrashAtom,
+  HighlighterAtom,
   LineData,
   RedPenAtom,
   Stamp,
@@ -18,6 +19,7 @@ export const useEraser = (dx: number, dy: number) => {
   const [___, setCrash] = useRecoilState(CrashAtom);
   const [____, setBulletEffect] = useRecoilState(Bullet);
   const [_____, setRedPen] = useRecoilState(RedPenAtom);
+  const [______, setHighlighter] = useRecoilState(HighlighterAtom);
 
   const eraseAnts = (x: number, y: number) => {
     const inEraserRange = (ant: AntData) => Math.abs(ant.x - x) < dx && Math.abs(ant.y - y) < dy;
@@ -50,5 +52,16 @@ export const useEraser = (dx: number, dy: number) => {
     setRedPen(lines => lines.filter(line => !inEraserRange(line)));
   };
 
-  return { eraseAnts, eraseStamps, eraseCrash, eraseBulletEffect, eraseRedPen };
+  const eraseHighlighter = (x: number, y: number) => {
+    const inEraserRange = (line: LineData) => {
+      for (let i = 0; i < line.points.length; i += 2) {
+        const inRange = Math.abs(line.points[i] - x) < dx && Math.abs(line.points[i + 1] - y) < dy;
+        if (inRange) return true;
+      }
+      return false;
+    };
+    setHighlighter(lines => lines.filter(line => !inEraserRange(line)));
+  };
+
+  return { eraseAnts, eraseStamps, eraseCrash, eraseBulletEffect, eraseRedPen, eraseHighlighter };
 };
