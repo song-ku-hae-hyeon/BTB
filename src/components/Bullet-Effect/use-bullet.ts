@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import { Vector2d } from 'konva/lib/types';
 import { Bullet } from '@recoil';
+import { IMAGE } from '@static';
 
 const createBulletShellElement = (x: number, y: number, duration: number) => {
   const container = document.createElement('div');
@@ -16,9 +17,9 @@ const createBulletShellElement = (x: number, y: number, duration: number) => {
 
   const bullet = document.createElement('div');
   applyElementStyle(bullet, {
-    width: '15px',
-    height: '15px',
-    background: 'red',
+    width: '25px',
+    height: '25px',
+    background: `no-repeat center/100% url(${IMAGE.BULLET_URL})`,
     animation: `${duration}ms fallAnimation cubic-bezier(0.0, 0.1, 0.0, 0.1) forwards`,
     anmationIterationCount: 1,
   });
@@ -47,7 +48,7 @@ export const useBullet = () => {
     const animationDuration = 1700;
     const bulletShellElement = createBulletShellElement(x, y, animationDuration);
     document.body.appendChild(bulletShellElement);
-    setTimeout(() => document.body.removeChild(bulletShellElement), animationDuration);
+    // setTimeout(() => document.body.removeChild(bulletShellElement), animationDuration);
   }, []);
 
   return { bulletPositions, drawBulletMark, drawBulletShell };
