@@ -2,6 +2,7 @@ import { useRecoilState } from 'recoil';
 import {
   AntAtom,
   AntData,
+  BluePenAtom,
   Bullet,
   BulletMark,
   Crash,
@@ -20,6 +21,7 @@ export const useEraser = (dx: number, dy: number) => {
   const [____, setBulletEffect] = useRecoilState(Bullet);
   const [_____, setRedPen] = useRecoilState(RedPenAtom);
   const [______, setHighlighter] = useRecoilState(HighlighterAtom);
+  const [________, setBluePen] = useRecoilState(BluePenAtom);
 
   const eraseAnts = (x: number, y: number) => {
     const inEraserRange = (ant: AntData) => Math.abs(ant.x - x) < dx && Math.abs(ant.y - y) < dy;
@@ -63,5 +65,16 @@ export const useEraser = (dx: number, dy: number) => {
     setHighlighter(lines => lines.filter(line => !inEraserRange(line)));
   };
 
-  return { eraseAnts, eraseStamps, eraseCrash, eraseBulletEffect, eraseRedPen, eraseHighlighter };
+  const eraseBluePen = (x: number, y: number) => {
+    const inEraserRange = (line: LineData) => {
+      for (let i = 0; i < line.points.length; i += 2) {
+        const inRange = Math.abs(line.points[i] - x) < dx && Math.abs(line.points[i + 1] - y) < dy;
+        if (inRange) return true;
+      }
+      return false;
+    };
+    setBluePen(lines => lines.filter(line => !inEraserRange(line)));
+  };
+
+  return { eraseAnts, eraseStamps, eraseCrash, eraseBulletEffect, eraseRedPen, eraseHighlighter, eraseBluePen };
 };
