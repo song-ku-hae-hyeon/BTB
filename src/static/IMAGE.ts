@@ -4,6 +4,7 @@ import stamp from '@public/stamp_64.png';
 import stamp_mark from '@public/stamp_mark_64.png';
 import ant_sprite from '@public/ant_sprite_64.png';
 import ant from '@public/ant_64.png';
+import bullet from '@public/bullet_512.png';
 import ant_dead from '@public/ant_dead_64.png';
 import hammer from '@public/hammer_64.png';
 import crash from '@public/crash_64.png';
@@ -24,6 +25,7 @@ const HAMMER_URL = hammer as string;
 const CRASH_URL = crash as string;
 const GUN_URL = gun as string;
 const GUN_MARK_URL = gun_mark as string;
+const BULLET_URL = bullet as string;
 const RED_PEN_URL = red_pen as string;
 const BLUE_PEN_URL = blue_pen as string;
 const CLEAN_URL = clean as string;
@@ -51,6 +53,7 @@ export default {
   HAMMER_URL,
   CRASH_URL,
   GUN_MARK_URL,
+  BULLET_URL,
   RED_PEN_URL,
   BLUE_PEN_URL,
   CLEAN_URL,
