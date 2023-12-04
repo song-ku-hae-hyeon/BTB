@@ -1,6 +1,6 @@
 import { IRect, Vector2d } from 'konva/lib/types';
 
-export interface HighlighterLineData {
+export interface LineData {
   points: number[];
 }
 

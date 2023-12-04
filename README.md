@@ -76,3 +76,5 @@ const DockBar = ({ selectTool }: DockBarProps) => {
   );
 };
 ```
+
+7. ContentApp 에 만든 컴포넌트를 추가합니다.
