@@ -40,6 +40,7 @@ export const CURSOR_URL: Record<ToolType, string> = {
   gun: GUN_URL,
   redPen: RED_PEN_URL,
   bluePen: BLUE_PEN_URL,
+  default: '',
 };
 
 export default {

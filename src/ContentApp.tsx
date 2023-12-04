@@ -26,13 +26,17 @@ const ContentApp = ({ isDev }: ContentAppProps) => {
     };
   }, []);
 
-  return (
-    <ContentWrapper isActive={isContentActive}>
-      <GlobalStyles />
-      <Workbench tool={tool} />
-      <DockBar selectTool={selectTool} />
-    </ContentWrapper>
-  );
+  if (isContentActive) {
+    return (
+      <ContentWrapper isActive={true}>
+        <GlobalStyles />
+        <Workbench tool={tool} />
+        <DockBar selectTool={selectTool} />
+      </ContentWrapper>
+    );
+  }
+
+  return null;
 };
 
 const Workbench = ({ tool }: { tool: ToolType }) => {
