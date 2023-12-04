@@ -11,9 +11,11 @@ const cursorImage: Record<ToolType, string> = {
   highlighter: `url(${IMAGE.HIGHLIGHTER_URL}) 8 64, auto;`,
   stamp: `url(${IMAGE.STAMP_URL}) 32 32 ,auto;`,
   ant: `pointer`,
-  bubble: `default`,
+  bubble: `url(${IMAGE.CLEAN_URL}) 32 32 ,auto;`,
   gun: `url(${IMAGE.GUN_URL}) 32 32 ,auto;`,
   hammer: `url(${IMAGE.HAMMER_URL}) 32 32 ,auto;`,
+  bluePen: `url(${IMAGE.BLUE_PEN_URL}) 8 64, auto;`,
+  redPen: `url(${IMAGE.RED_PEN_URL}) 8 64, auto;`,
 };
 
 const ContentWrapper = styled.div<ContentWrapperStyledProps>`

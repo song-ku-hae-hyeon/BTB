@@ -1,17 +1,20 @@
 import { useEffect, RefObject } from 'react';
 import { Line } from 'react-konva';
-import { HighlighterAtom } from '@recoil';
+import { LineData } from '@recoil';
 
 import S from './styled';
 import type Konva from 'konva';
-import { useRecoilState } from 'recoil';
+import { RecoilState, useRecoilState } from 'recoil';
 
-type HighlighterProps = {
+type PenProps = {
   stageRef: RefObject<Konva.Stage> | null;
+  atom: RecoilState<LineData[]>;
+  color: string;
+  strokeWidth: number;
 };
 
-const Highlighter = ({ stageRef }: HighlighterProps) => {
-  const [lines, setLines] = useRecoilState(HighlighterAtom);
+const Pen = ({ stageRef, atom, color, strokeWidth }: PenProps) => {
+  const [lines, setLines] = useRecoilState(atom);
 
   useEffect(() => {
     const stage = stageRef?.current;
@@ -46,20 +49,20 @@ const Highlighter = ({ stageRef }: HighlighterProps) => {
   }, [stageRef?.current]);
 
   return (
-    <S.HighlighterLayer>
+    <S.PenLayer>
       {lines.map((line, i) => (
         <Line
           key={i}
           points={line.points}
-          stroke="rgba(255, 255, 0, 0.5)" // 형광펜의 색상 설정
-          strokeWidth={20} // 형광펜의 두께 설정
-          globalCompositeOperation="source-over" // 형광펜의 블렌딩 모드 설정
+          stroke={color} // 펜의 색상 설정
+          strokeWidth={strokeWidth} // 펜의 두께 설정
+          globalCompositeOperation="source-over" // 펜의 블렌딩 모드 설정
           lineCap="butt"
           lineJoin="round"
         />
       ))}
-    </S.HighlighterLayer>
+    </S.PenLayer>
   );
 };
 
-export default Highlighter;
+export default Pen;

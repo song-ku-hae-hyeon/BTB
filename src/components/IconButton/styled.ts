@@ -10,9 +10,11 @@ const iconImage: Record<ToolType, string> = {
   highlighter: `url(${IMAGE.HIGHLIGHTER_URL})`,
   stamp: `url(${IMAGE.STAMP_URL})`,
   ant: `url(${IMAGE.ANT_URL})`,
-  bubble: 'none',
+  bubble: `url(${IMAGE.CLEAN_URL})`,
   gun: `url(${IMAGE.GUN_URL})`,
   hammer: `url(${IMAGE.HAMMER_URL})`,
+  redPen: `url(${IMAGE.RED_PEN_URL})`,
+  bluePen: `url(${IMAGE.BLUE_PEN_URL})`,
 };
 
 const ButtonWrapper = styled.button<Pick<ButtonProps, 'icon'>>`
