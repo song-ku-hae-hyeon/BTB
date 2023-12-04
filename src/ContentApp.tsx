@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useRecoilState } from 'recoil';
-import { ContentWrapper, DockBar, Pen, Stamp, AntGroup, Hammer, BulletEffect, Bubble } from '@components';
+import { ContentWrapper, DockBar, Pen, DeadAntGroup, Stamp, AntGroup, Hammer, BulletEffect, Bubble } from '@components';
 import { ToolType } from '@types';
 import type Konva from 'konva';
 import { BluePenAtom, HighlighterAtom, RedPenAtom, ToolAtom } from '@recoil';
@@ -49,10 +49,11 @@ const Workbench = ({ tool }: { tool: ToolType }) => {
         />
         <Pen stageRef={tool === 'redPen' ? stageRef : null} atom={RedPenAtom} color="#F76D67" strokeWidth={5} />
         <Pen stageRef={tool === 'bluePen' ? stageRef : null} atom={BluePenAtom} color="#5166B3" strokeWidth={5} />
+        <DeadAntGroup />
+        <Hammer stageRef={tool === 'hammer' ? stageRef : null} />
         <Stamp stageRef={tool === 'stamp' ? stageRef : null} />
         <Bubble stageRef={tool === 'bubble' ? stageRef : null} />
         <BulletEffect stageRef={tool === 'gun' ? stageRef : null} />
-        <Hammer stageRef={tool === 'hammer' ? stageRef : null} />
         <AntGroup stageRef={tool === 'ant' ? stageRef : null} />
       </Stage>
     </div>

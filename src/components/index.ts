@@ -5,6 +5,7 @@ export { default as DevBackground } from './DevBackground';
 export { default as Pen } from './Pen';
 export { default as Stamp } from './Stamp';
 export { default as AntGroup } from './AntGroup';
+export { default as DeadAntGroup } from './DeadAntGroup';
 export { default as ContentWrapper } from './ContentWrapper';
 export { default as Hammer } from './Hammer';
 export { Bubble } from './Bubble';

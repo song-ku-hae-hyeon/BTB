@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import type { RefObject } from 'react';
 import { Layer } from 'react-konva';
 import type Konva from 'konva';
-import DeadAnt from './DeadAnt';
 import { useAntKiller } from '@hooks';
 
 import Ant from './Ant';
@@ -34,9 +33,7 @@ const AntGroup = ({ stageRef }: AntGroupProps) => {
     };
   }, [ants]);
 
-  return (
-    <Layer>{ants.map((ant, idx) => (ant.dead ? <DeadAnt {...ant} key={idx} /> : <Ant {...ant} key={idx} />))}</Layer>
-  );
+  return <Layer>{ants.map((ant, idx) => (ant.dead ? null : <Ant {...ant} key={idx} />))}</Layer>;
 };
 
 export default AntGroup;

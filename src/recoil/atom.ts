@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 
 import type { ToolType } from '@types';
 import type { ShakeProps, LineData, Stamp, AntData, Crash, BulletMark } from './types';
@@ -16,6 +16,14 @@ export const StampAtom = atom<Stamp[]>({
 export const AntAtom = atom<AntData[]>({
   key: 'antAtom',
   default: [],
+});
+
+export const deadAntSelector = selector<AntData[]>({
+  key: 'deadAnts',
+  get: ({ get }) => {
+    const ants = get(AntAtom);
+    return ants.filter(ant => ant.dead);
+  },
 });
 
 export const ToolAtom = atom<ToolType>({
