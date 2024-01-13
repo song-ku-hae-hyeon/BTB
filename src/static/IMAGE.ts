@@ -4,7 +4,7 @@ import stamp from '@public/stamp_64.png';
 import stamp_mark from '@public/stamp_mark_64.png';
 import ant_sprite from '@public/ant_sprite_64.png';
 import ant from '@public/ant_64.png';
-import bullet from '@public/bullet_512.png';
+import bullet from '@public/bullet_64.png';
 import ant_dead from '@public/ant_dead_64.png';
 import hammer from '@public/hammer_64.png';
 import crash from '@public/crash_64.png';
